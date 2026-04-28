@@ -584,6 +584,83 @@
     }
 
     /* ============================================================
+       ANTES VS DESPUÉS
+    ============================================================ */
+    #antes-despues {
+      background: var(--teal2);
+    }
+    .avd-headline {
+      text-align: center;
+      max-width: 760px;
+      margin: 0 auto 56px;
+    }
+    .avd-table {
+      display: grid;
+      grid-template-columns: 1fr 56px 1fr;
+      align-items: start;
+      gap: 0;
+      border-radius: var(--radius-lg);
+      overflow: hidden;
+    }
+    .avd-col {
+      display: flex;
+      flex-direction: column;
+    }
+    .avd-col-header {
+      padding: 20px 28px;
+      font-family: var(--font-display);
+      font-size: 1rem;
+      font-weight: 700;
+      letter-spacing: 0.08em;
+      text-transform: uppercase;
+    }
+    .avd-col-header.before { background: rgba(220,50,50,.18); color: #ff7c7c; }
+    .avd-col-header.after  { background: rgba(97,248,169,.13); color: var(--green); }
+    .avd-row {
+      padding: 18px 28px;
+      font-size: .9rem;
+      line-height: 1.5;
+      border-top: 1px solid rgba(255,255,255,.05);
+    }
+    .avd-col.left .avd-row  { background: rgba(220,50,50,.06); color: rgba(255,255,255,.75); }
+    .avd-col.right .avd-row { background: rgba(97,248,169,.05); color: rgba(255,255,255,.85); }
+    .avd-divider {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+    .avd-divider-header {
+      height: 61px; /* matches col header height */
+      background: var(--teal2);
+      width: 100%;
+    }
+    .avd-divider-line {
+      width: 2px;
+      flex: 1;
+      background: rgba(255,255,255,.08);
+      margin: 0 auto;
+    }
+    .avd-divider-icon {
+      position: sticky;
+      top: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      width: 36px; height: 36px;
+      border-radius: 50%;
+      background: var(--teal2);
+      border: 2px solid rgba(255,255,255,.12);
+      font-size: 1rem;
+      margin: 12px auto;
+    }
+    @media (max-width: 768px) {
+      .avd-table { grid-template-columns: 1fr; }
+      .avd-divider { display: none; }
+      .avd-col.left .avd-col-header { border-radius: 12px 12px 0 0; }
+      .avd-col.right .avd-col-header { margin-top: 16px; border-radius: 12px 12px 0 0; }
+    }
+
+    /* ============================================================
        QUE ES SKIPIT
     ============================================================ */
     #que-es {}
@@ -826,6 +903,102 @@
     }
     .metrica-desc {
       font-size: .9rem; color: rgba(255,255,255,.55); line-height: 1.5;
+    }
+
+    /* ============================================================
+       TIMELINE ONBOARDING
+    ============================================================ */
+    #onboarding {
+      background: var(--teal3);
+    }
+    .onboarding-header {
+      text-align: center;
+      max-width: 700px;
+      margin: 0 auto 72px;
+    }
+    .onboarding-timeline {
+      display: grid;
+      grid-template-columns: repeat(3, 1fr);
+      gap: 0;
+      position: relative;
+    }
+    .onboarding-timeline::before {
+      content: '';
+      position: absolute;
+      top: 36px;
+      left: calc(16.66% + 20px);
+      right: calc(16.66% + 20px);
+      height: 2px;
+      background: linear-gradient(90deg, rgba(97,248,169,.5), rgba(97,248,169,.2));
+    }
+    .onboarding-step {
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      text-align: center;
+      padding: 0 24px;
+      position: relative;
+    }
+    .onboarding-day {
+      font-family: var(--font-display);
+      font-size: .75rem;
+      font-weight: 700;
+      letter-spacing: 0.1em;
+      text-transform: uppercase;
+      color: var(--green);
+      margin-bottom: 12px;
+    }
+    .onboarding-circle {
+      width: 72px; height: 72px;
+      border-radius: 50%;
+      background: rgba(97,248,169,.1);
+      border: 2px solid rgba(97,248,169,.35);
+      display: flex; align-items: center; justify-content: center;
+      font-size: 1.6rem;
+      margin-bottom: 24px;
+      position: relative;
+      z-index: 1;
+    }
+    .onboarding-step-title {
+      font-family: var(--font-display);
+      font-size: 1.1rem;
+      font-weight: 700;
+      margin-bottom: 12px;
+    }
+    .onboarding-step-body {
+      font-size: .875rem;
+      color: rgba(255,255,255,.55);
+      line-height: 1.6;
+    }
+    .onboarding-cta {
+      text-align: center;
+      margin-top: 64px;
+    }
+    .onboarding-trust {
+      display: flex;
+      justify-content: center;
+      gap: 32px;
+      margin-top: 24px;
+      flex-wrap: wrap;
+    }
+    .onboarding-trust-item {
+      font-size: .8rem;
+      color: rgba(255,255,255,.45);
+      display: flex;
+      align-items: center;
+      gap: 6px;
+    }
+    .onboarding-trust-item::before {
+      content: '✓';
+      color: var(--green);
+      font-weight: 700;
+    }
+    @media (max-width: 768px) {
+      .onboarding-timeline { grid-template-columns: 1fr; gap: 40px; }
+      .onboarding-timeline::before { display: none; }
+      .onboarding-step { flex-direction: row; text-align: left; gap: 20px; align-items: flex-start; }
+      .onboarding-circle { flex-shrink: 0; width: 56px; height: 56px; font-size: 1.3rem; margin-bottom: 0; }
+      .onboarding-step > div:last-child { padding-top: 4px; }
     }
 
     /* ============================================================
@@ -1454,7 +1627,7 @@
             <a href="#modalidades" data-tab="takeaway">🥡 Takeaway</a>
             <a href="#modalidades" data-tab="llamador">📲 Llamador</a>
             <a href="#modalidades" data-tab="multilocal">🏬 Multilocal</a>
-            <a href="#modalidades" data-tab="dinein">🖥️ Tótem</a>
+            <a href="#modalidades" data-tab="totem">🖥️ Tótem</a>
           </div>
         </div>
       </div>
@@ -1493,7 +1666,7 @@
   <a href="#panel-takeaway" class="mobile-link" style="font-size:1.1rem; padding-left:1rem; opacity:.7;">↳ Takeaway</a>
   <a href="#panel-llamador" class="mobile-link" style="font-size:1.1rem; padding-left:1rem; opacity:.7;">↳ Llamador</a>
   <a href="#panel-multilocal" class="mobile-link" style="font-size:1.1rem; padding-left:1rem; opacity:.7;">↳ Multilocal</a>
-  <a href="#modalidades" class="mobile-link" style="font-size:1.1rem; padding-left:1rem; opacity:.7;">↳ Tótem</a>
+  <a href="#modalidades" data-tab="totem" class="mobile-link" style="font-size:1.1rem; padding-left:1rem; opacity:.7;">↳ Tótem</a>
   <a href="#integraciones" class="mobile-link">Integraciones</a>
   <a href="#faq" class="mobile-link">FAQ</a>
   <a href="https://wa.me/5491156681958?text=Hola%2C+quiero+saber+m%C3%A1s+sobre+Skipit" target="_blank" class="btn btn-primary" style="margin-top:16px; font-size:1rem;">
@@ -1544,9 +1717,8 @@
       <div class="hero-glow"></div>
       <div class="hero-phone-wrap">
         <div class="hero-phone">
-          <div class="hero-phone-img img-placeholder" style="height:580px;">
-            <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-            Reemplazar con mockup del producto<br><span style="font-size:.75rem; opacity:.6">Imagen del menú digital / app en el celular</span>
+          <div class="hero-phone-img">
+            <img src="" alt="Mockup del menú digital de Skipit en celular" data-description="Mockup del celular mostrando el menú digital de un local real — pantalla de selección de productos con diseño de Skipit" style="width:100%;height:100%;object-fit:cover;border-radius:32px;background:#0a3a42;display:block;">
           </div>
         </div>
         <div class="hero-float-card card-top">
@@ -1638,14 +1810,52 @@
   </div>
 </section>
 
+<!-- ===================== ANTES VS DESPUÉS ===================== -->
+<section id="antes-despues" class="section">
+  <div class="container">
+    <div class="avd-headline reveal">
+      <div class="section-label">Antes vs Después</div>
+      <h2 class="display-lg">Tu local, antes y después de Skipit.</h2>
+      <p class="body-lg text-gray" style="margin-top:16px;">La diferencia no es tecnología. Es cuánto vendés y cuánto sabés.</p>
+    </div>
+    <div class="avd-table reveal">
+      <!-- Columna izquierda: ANTES -->
+      <div class="avd-col left">
+        <div class="avd-col-header before">❌ Antes</div>
+        <div class="avd-row">Mozo anota a mano → comandas con errores</div>
+        <div class="avd-row">Cliente espera 15 min para que lo atiendan</div>
+        <div class="avd-row">Cerrás el día sin saber quién vino</div>
+        <div class="avd-row">No sabés por qué el martes vendiste menos</div>
+        <div class="avd-row">Pagás hasta 30% de comisión a apps de delivery</div>
+        <div class="avd-row">Cada sistema por separado, nada se integra</div>
+      </div>
+      <!-- Divisor -->
+      <div class="avd-divider">
+        <div class="avd-divider-header"></div>
+        <div class="avd-divider-icon">⚡</div>
+        <div class="avd-divider-line"></div>
+      </div>
+      <!-- Columna derecha: CON SKIPIT -->
+      <div class="avd-col right">
+        <div class="avd-col-header after">✅ Con Skipit</div>
+        <div class="avd-row">Pedido llega directo al panel, sin intermediarios</div>
+        <div class="avd-row">Cliente pide en 2 min desde su celular</div>
+        <div class="avd-row">Nombre, mail y hábitos de cada cliente, todos los días</div>
+        <div class="avd-row">Reportes en tiempo real: qué, cuándo y cuánto</div>
+        <div class="avd-row">Tarifa fija mensual, sin comisión por transacción</div>
+        <div class="avd-row">Pagos, POS, WhatsApp y datos en un solo lugar</div>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ===================== QUÉ ES SKIPIT ===================== -->
 <section id="que-es" class="section">
   <div class="container">
     <div class="que-es-inner">
       <div class="que-es-visual reveal">
-        <div class="que-es-img img-placeholder">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 18h.01M8 21h8a2 2 0 002-2V5a2 2 0 00-2-2H8a2 2 0 00-2 2v14a2 2 0 002 2z"/></svg>
-          Foto real del producto en uso<br><span style="font-size:.75rem; opacity:.6">Ejemplo: cliente escaneando QR en mesa</span>
+        <div class="que-es-img">
+          <img src="" alt="Cliente escaneando QR en mesa con Skipit" data-description="Foto real de un cliente escaneando el QR de Skipit en una mesa de restaurante — celular en mano apuntando al código" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius-lg);background:#0a3a42;display:block;">
         </div>
         <div class="que-es-badge">
           <div class="big">No sos un POS.</div>
@@ -1708,6 +1918,7 @@
       <button class="modal-tab" data-tab="takeaway" role="tab">🥡 Takeaway</button>
       <button class="modal-tab" data-tab="llamador" role="tab">📲 Llamador</button>
       <button class="modal-tab" data-tab="multilocal" role="tab">🏬 Multilocal</button>
+      <button class="modal-tab" data-tab="totem" role="tab">🖥️ Tótem</button>
     </div>
 
     <div class="modal-panels">
@@ -1739,9 +1950,8 @@
             </div>
           </div>
           <div class="modal-panel-visual">
-            <div class="modal-img img-placeholder">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-              Imagen real: flujo dine-in<br><span style="font-size:.75rem; opacity:.6">Cliente escaneando QR + pantalla del menú</span>
+            <div class="modal-img">
+              <img src="" alt="Flujo dine-in: cliente escaneando QR y viendo el menú" data-description="Modalidad Dine-in: pantalla del menú digital en celular + panel del local con pedidos llegando en tiempo real" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius-lg);background:#0a3a42;display:block;">
             </div>
             <div class="modal-badge">
               <div class="badge-title">Panel del local — en tiempo real</div>
@@ -1778,9 +1988,8 @@
             </div>
           </div>
           <div class="modal-panel-visual">
-            <div class="modal-img img-placeholder">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-              Imagen real: flujo takeaway<br><span style="font-size:.75rem; opacity:.6">Ticket digital + validación en barra</span>
+            <div class="modal-img">
+              <img src="" alt="Flujo takeaway: cliente retirando con ticket digital" data-description="Modalidad Takeaway: cliente retirando su pedido en la barra mostrando el ticket digital en su celular" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius-lg);background:#0a3a42;display:block;">
             </div>
             <div class="modal-badge">
               <div class="badge-title">0 filas en la barra</div>
@@ -1817,9 +2026,8 @@
             </div>
           </div>
           <div class="modal-panel-visual">
-            <div class="modal-img img-placeholder">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-              Imagen real: flujo llamador<br><span style="font-size:.75rem; opacity:.6">Panel + pantalla del WhatsApp de aviso</span>
+            <div class="modal-img">
+              <img src="" alt="Flujo llamador: WhatsApp con mensaje de pedido listo" data-description="Modalidad Llamador: screenshot del WhatsApp con el mensaje automático de Skipit avisando que el pedido está listo para retirar" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius-lg);background:#0a3a42;display:block;">
             </div>
             <div class="modal-badge">
               <div class="badge-title">WhatsApp automático</div>
@@ -1856,9 +2064,8 @@
             </div>
           </div>
           <div class="modal-panel-visual">
-            <div class="modal-img img-placeholder">
-              <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-              Imagen real: flujo multilocal<br><span style="font-size:.75rem; opacity:.6">Pantalla con múltiples locales disponibles</span>
+            <div class="modal-img">
+              <img src="" alt="Flujo multilocal: pantalla con múltiples locales" data-description="Modalidad Multilocal: pantalla del celular mostrando la selección de múltiples locales disponibles en un mismo espacio (ej: Cerro Catedral)" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius-lg);background:#0a3a42;display:block;">
             </div>
             <div class="modal-badge">
               <div class="badge-title">Toda la montaña en un solo lugar</div>
@@ -1867,6 +2074,55 @@
           </div>
         </div>
       </div>
+
+      <!-- TÓTEM -->
+      <div class="modal-panel" id="panel-totem">
+        <div class="modal-panel-inner">
+          <div class="modal-panel-content">
+            <span class="tag">Ideal para patios de comida, aeropuertos y locales de alto volumen</span>
+            <h3>El cliente elige, paga y retira. Solo.</h3>
+            <p>Skipit funciona en cualquier pantalla táctil como tótem de autoservicio. El cliente navega el menú en pantalla grande, paga con tarjeta física, contactless o QR, y recibe su ticket para retirar. Si compró comida, le avisamos por WhatsApp cuando está lista. Si compró bebidas, va directo a la barra con su ticket.</p>
+            <div class="modal-steps">
+              <div class="modal-step">
+                <div class="step-num">1</div>
+                <p>El cliente navega el menú completo en la pantalla táctil</p>
+              </div>
+              <div class="modal-step">
+                <div class="step-num">2</div>
+                <p>Elige sus productos y los agrega al carrito</p>
+              </div>
+              <div class="modal-step">
+                <div class="step-num">3</div>
+                <p>Paga con tarjeta física, contactless o QR</p>
+              </div>
+              <div class="modal-step">
+                <div class="step-num">4</div>
+                <p>Recibe su ticket impreso o digital para retirar</p>
+              </div>
+              <div class="modal-step">
+                <div class="step-num">5</div>
+                <p>Comida: WhatsApp le avisa cuando está lista. Bebidas: va directo a la barra.</p>
+              </div>
+            </div>
+            <div style="margin-top:24px; padding:16px 20px; background:rgba(97,248,169,.06); border:1px solid rgba(97,248,169,.15); border-radius:12px; font-size:.85rem; color:rgba(255,255,255,.65); line-height:1.6;">
+              No proveemos el hardware — Skipit funciona en cualquier tótem existente. Si necesitás el dispositivo, te conectamos con nuestros partners.
+            </div>
+            <div style="margin-top:16px;">
+              <span class="tag" style="font-size:.75rem;">Compatible con cualquier hardware · Partner oficial: Permaquim</span>
+            </div>
+          </div>
+          <div class="modal-panel-visual">
+            <div class="modal-img">
+              <img src="" alt="Tótem de autoservicio con Skipit" data-description="Modalidad Tótem: pantalla grande táctil mostrando el menú de Skipit en un tótem de autoservicio — vista completa del menú con categorías y precios" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius-lg);background:#0a3a42;display:block;">
+            </div>
+            <div class="modal-badge">
+              <div class="badge-title">Autoservicio total</div>
+              <div class="badge-sub">Sin filas · Sin empleados · Sin fricción</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
     </div>
   </div>
 </section>
@@ -1882,30 +2138,35 @@
     <div class="cf-steps">
       <div class="cf-step reveal">
         <div class="cf-step-num">01</div>
-        <div class="cf-step-img img-placeholder">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M12 4v1m6 11h2m-6 0h-2v4m0-11v3m0 0h.01M12 12h4.01M16 20h4M4 12h4m12 0h.01M5 8H3m2 0h.01M20 8h.01M5 8a2 2 0 11-4 0 2 2 0 014 0zm10 0a2 2 0 11-4 0 2 2 0 014 0zm5 0a2 2 0 11-4 0 2 2 0 014 0z"/></svg>
-          Imagen: cliente escaneando QR<br><span style="font-size:.72rem; opacity:.6">Mesa con QR visible</span>
+        <div class="cf-step-img">
+          <img src="" alt="Mesa con QR de Skipit visible" data-description="Cómo funciona paso 1: foto de una mesa de restaurante con el QR de Skipit impreso y visible, idealmente con cliente apuntando el celular" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius);background:#0a3a42;display:block;">
         </div>
         <h3>Escanean el QR</h3>
         <p>Tus clientes apuntan la cámara del celular al QR de la mesa. Sin app, sin registro. En 2 segundos están en el menú.</p>
       </div>
       <div class="cf-step reveal reveal-delay-1">
         <div class="cf-step-num">02</div>
-        <div class="cf-step-img img-placeholder">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-          Imagen: menú digital en celular<br><span style="font-size:.72rem; opacity:.6">Pantalla con productos y carrito</span>
+        <div class="cf-step-img">
+          <img src="" alt="Menú digital de Skipit en celular con carrito" data-description="Cómo funciona paso 2: celular mostrando el menú digital de Skipit abierto, con productos seleccionados y carrito con items agregados" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius);background:#0a3a42;display:block;">
         </div>
         <h3>Piden y pagan</h3>
         <p>Eligen del menú con fotos, arman su pedido y pagan con el medio que prefieran. Confirmación instantánea en pantalla.</p>
       </div>
       <div class="cf-step reveal reveal-delay-2">
         <div class="cf-step-num">03</div>
-        <div class="cf-step-img img-placeholder">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-          Imagen: dashboard del local<br><span style="font-size:.72rem; opacity:.6">Panel con pedidos llegando en tiempo real</span>
+        <div class="cf-step-img">
+          <img src="" alt="Dashboard de Skipit con pedidos en tiempo real" data-description="Cómo funciona paso 3: screenshot del dashboard (Portal Partners) de Skipit mostrando pedidos llegando en tiempo real con sus estados" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius);background:#0a3a42;display:block;">
         </div>
         <h3>Vos lo recibís y preparás</h3>
         <p>El pedido llega directo a tu dashboard. Lo preparás y lo entregás. Todo registrado, sin errores, sin papel.</p>
+      </div>
+    </div>
+    <div class="video-container reveal" style="margin-top:64px; border-radius:var(--radius-lg); overflow:hidden; background:#0a3a42; border:1.5px dashed rgba(97,248,169,.25);">
+      <video src="" controls poster="" style="width:100%; border-radius:var(--radius-lg); display:block; min-height:360px;">
+        <!-- Video placeholder: demo completa del flujo QR → menú → pedido → pago → dashboard -->
+      </video>
+      <div style="padding:16px 24px; font-size:.8rem; color:rgba(255,255,255,.4); text-align:center;" data-description="Video demo completa del flujo de Skipit: cliente escanea QR → navega menú → agrega al carrito → paga → pedido llega al dashboard del local (30-60 segundos)">
+        📹 Video placeholder — Demo completa: QR → menú → pedido → pago → dashboard
       </div>
     </div>
   </div>
@@ -1938,6 +2199,51 @@
       </div>
     </div>
     <p class="text-gray" style="text-align:center; margin-top:24px; font-size:.85rem; opacity:.6;">* Datos actualizados mensualmente basados en locales activos.</p>
+  </div>
+</section>
+
+<!-- ===================== TIMELINE ONBOARDING ===================== -->
+<section id="onboarding" class="section">
+  <div class="container">
+    <div class="onboarding-header reveal">
+      <div class="section-label">Onboarding</div>
+      <h2 class="display-lg">Lunes firmás. Miércoles ya estás vendiendo.</h2>
+      <p class="body-lg text-gray" style="margin-top:16px;">Setup en 48hs. Nosotros nos encargamos de todo.</p>
+    </div>
+    <div class="onboarding-timeline">
+      <div class="onboarding-step reveal">
+        <div class="onboarding-day">Día 1</div>
+        <div class="onboarding-circle">🍽️</div>
+        <div>
+          <div class="onboarding-step-title">Cargamos tu menú</div>
+          <p class="onboarding-step-body">Nos mandás la carta y nosotros la cargamos en el sistema. Fotos, precios, categorías, variantes. Vos no tocás nada.</p>
+        </div>
+      </div>
+      <div class="onboarding-step reveal reveal-delay-1">
+        <div class="onboarding-day">Día 2</div>
+        <div class="onboarding-circle">💳</div>
+        <div>
+          <div class="onboarding-step-title">Configuramos los pagos</div>
+          <p class="onboarding-step-body">Conectamos tus medios de pago (MercadoPago, MODO, AstroPay u otros). Probamos que todo funcione. Te mostramos el dashboard.</p>
+        </div>
+      </div>
+      <div class="onboarding-step reveal reveal-delay-2">
+        <div class="onboarding-day">Día 3</div>
+        <div class="onboarding-circle">🚀</div>
+        <div>
+          <div class="onboarding-step-title">Tus clientes ya pueden pedir</div>
+          <p class="onboarding-step-body">Imprimís los QR, los ponés en las mesas, y listo. Desde ese momento cada pedido llega directo al panel y cada venta genera datos de tus clientes.</p>
+        </div>
+      </div>
+    </div>
+    <div class="onboarding-cta reveal">
+      <a href="https://wa.me/5491156681958?text=Hola%2C+quiero+arrancar+con+Skipit+esta+semana" target="_blank" class="btn btn-primary">¿Querés arrancar esta semana? → Hablar con el equipo</a>
+      <div class="onboarding-trust">
+        <span class="onboarding-trust-item">Sin permanencia mínima</span>
+        <span class="onboarding-trust-item">Sin comisión por transacción</span>
+        <span class="onboarding-trust-item">Soporte humano desde el día 1</span>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1997,9 +2303,8 @@
         </div>
       </div>
       <div class="dashboard-visual reveal reveal-delay-2">
-        <div class="dashboard-img img-placeholder" style="height:480px;">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z"/></svg>
-          Screenshot del dashboard / Portal Partners<br><span style="font-size:.75rem; opacity:.6">Panel de métricas con gráficos reales</span>
+        <div class="dashboard-img" style="height:480px;">
+          <img src="" alt="Portal Partners de Skipit con métricas" data-description="Screenshot real del Portal Partners de Skipit mostrando el dashboard completo con métricas de ventas, gráficos de performance, lista de clientes y pedidos del día" style="width:100%;height:100%;object-fit:cover;border-radius:var(--radius-lg);background:#0a3a42;display:block;">
         </div>
       </div>
     </div>
@@ -2232,10 +2537,7 @@
             <div class="sponsor-brand-pill">Tu marca acá</div>
           </div>
         </div>
-        <div class="img-placeholder" style="height:200px; border-radius:var(--radius);">
-          <svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor" width="28" height="28"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z"/></svg>
-          Screenshot de banner de sponsor dentro del menú
-        </div>
+        <img src="" alt="Banner de sponsor dentro del menú de Skipit" data-description="Sección Sponsors: banner de una marca (ej: BBVA o Chandon) integrado visualmente dentro del menú digital de Skipit — muestra cómo se ve un sponsor en contexto real" style="width:100%;height:200px;object-fit:cover;border-radius:var(--radius);background:#0a3a42;display:block;">
       </div>
     </div>
   </div>
@@ -2248,6 +2550,16 @@
       <div class="section-label">Precios</div>
       <h2 class="display-lg">Planes que crecen con tu negocio</h2>
       <p class="body-lg text-gray" style="margin-top:16px;">Sin comisión por transacción. Sin letra chica. Sin sorpresas.</p>
+    </div>
+    <div class="reveal" style="margin-bottom:48px; background:rgba(97,248,169,.06); border:1px solid rgba(97,248,169,.2); border-radius:var(--radius); padding:24px 32px; display:flex; align-items:center; gap:24px; flex-wrap:wrap;">
+      <span style="font-size:1.4rem;">⚡</span>
+      <div>
+        <p style="font-size:.95rem; color:rgba(255,255,255,.85); line-height:1.6; margin:0;">
+          Las apps de delivery cobran entre <strong style="color:var(--green);">15% y 35% de comisión</strong> por cada pedido.<br>
+          En un local que factura $500.000/mes eso son hasta <strong style="color:#ff7c7c;">$175.000 que se van en comisiones</strong>.<br>
+          <span style="color:var(--white); font-weight:600;">Skipit: tarifa fija mensual. Sin comisión. Sin sorpresas.</span>
+        </p>
+      </div>
     </div>
     <div class="planes-grid reveal">
       <!-- Plan 1 -->
@@ -2433,6 +2745,20 @@
           <span class="faq-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg></span>
         </button>
         <div class="faq-a"><div class="faq-a-inner">Tenemos soporte por WhatsApp y email. En los planes Pro y Multilocal el soporte es prioritario con tiempos de respuesta reducidos y un account manager dedicado que conoce tu operación.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">
+          ¿Qué pasa si mis clientes son mayores y no saben usar el celular?
+          <span class="faq-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg></span>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Skipit no reemplaza la atención tradicional, la complementa. Los clientes que prefieran que un mozo los atienda pueden seguir haciéndolo exactamente igual. La experiencia digital es una opción adicional para quienes la quieran usar — no una obligación para nadie. En la práctica, más del 80% de los clientes adopta el sistema en los primeros días porque es más simple que esperar.</div></div>
+      </div>
+      <div class="faq-item">
+        <button class="faq-q">
+          ¿Funciona para eventos o espacios de una sola noche?
+          <span class="faq-icon"><svg xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 4v16m8-8H4"/></svg></span>
+        </button>
+        <div class="faq-a"><div class="faq-a-inner">Sí. Skipit se puede activar para un evento puntual sin necesidad de contratar un plan mensual. Es ideal para festivales, eventos privados, recitales o cualquier espacio donde haya alto volumen de consumo y poca fricción sea clave. Hablá con el equipo para armar la configuración que necesitás.</div></div>
       </div>
     </div>
   </div>
