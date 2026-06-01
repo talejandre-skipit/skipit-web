@@ -1,0 +1,1408 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Skipit — Todo lo que esperás, sin tener que esperar</title>
+  <meta name="description" content="Skipit potencia tu punto de venta para que tus clientes pidan y paguen desde el celular. Sin filas, sin fricción." />
+  <style>
+    /* =========================================================
+       FUENTES DE MARCA  ·  Area (display) + Cy Text (body)
+       Reemplazá los .woff2 en /fonts si querés otros pesos.
+    ========================================================= */
+    @font-face { font-family:'Area'; src:url('fonts/Area-Regular.woff2')   format('woff2'); font-weight:400; font-style:normal; font-display:swap; }
+    @font-face { font-family:'Area'; src:url('fonts/Area-SemiBold.woff2')  format('woff2'); font-weight:600; font-style:normal; font-display:swap; }
+    @font-face { font-family:'Area'; src:url('fonts/Area-Bold.woff2')      format('woff2'); font-weight:700; font-style:normal; font-display:swap; }
+    @font-face { font-family:'Area'; src:url('fonts/Area-ExtraBold.woff2') format('woff2'); font-weight:800; font-style:normal; font-display:swap; }
+    @font-face { font-family:'Area'; src:url('fonts/Area-Black.woff2')     format('woff2'); font-weight:900; font-style:normal; font-display:swap; }
+    @font-face { font-family:'Cy Text'; src:url('fonts/CyText-Regular.woff2')  format('woff2'); font-weight:400; font-style:normal; font-display:swap; }
+    @font-face { font-family:'Cy Text'; src:url('fonts/CyText-SemiBold.woff2') format('woff2'); font-weight:600; font-style:normal; font-display:swap; }
+    @font-face { font-family:'Cy Text'; src:url('fonts/CyText-Bold.woff2')     format('woff2'); font-weight:700; font-style:normal; font-display:swap; }
+
+    /* =========================================================
+       VARIABLES & RESET
+    ========================================================= */
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+    :root {
+      --green:    #61F8A9;
+      --green-2:  #3BD58B;
+      --green-3:  #299E66;
+      --green-4:  #176640;
+
+      --teal:     #062E35;
+      --teal-2:   #04252B;
+      --teal-3:   #031C21;
+      --teal-4:   #021418;
+
+      --white:    #FDFDFD;
+      --offwhite: #F7F7F7;
+      --offwhite-2:#F2F2F2;
+      --gray:     #D6DADB;
+
+      --purple:   #8376FF;
+      --purple-2: #B1A1FF;
+      --purple-3: #D0C6FB;
+
+      --font-display: 'Area', system-ui, sans-serif;
+      --font-body:    'Cy Text', system-ui, sans-serif;
+      --radius:       18px;
+      --radius-lg:    26px;
+      --radius-xl:    36px;
+      --shadow-sm:    0 6px 20px rgba(6,46,53,0.06);
+      --shadow-md:    0 14px 44px rgba(6,46,53,0.10);
+      --shadow-lg:    0 30px 70px rgba(6,46,53,0.18);
+      --ease:         cubic-bezier(.22,1,.36,1);
+      --transition:   .35s cubic-bezier(.4,0,.2,1);
+      --max-width:    1240px;
+      --section-pad:  clamp(80px, 9vw, 140px);
+    }
+
+    html { scroll-behavior: smooth; }
+    body {
+      font-family: var(--font-body);
+      background: var(--offwhite-2);
+      color: var(--teal);
+      line-height: 1.6;
+      overflow-x: hidden;
+      -webkit-font-smoothing: antialiased;
+    }
+
+    img, svg { display: block; max-width: 100%; }
+    a { text-decoration: none; color: inherit; }
+    ul { list-style: none; }
+    button { font-family: inherit; cursor: pointer; border: none; background: none; }
+
+    /* =========================================================
+       TIPOGRAFÍA  ·  centrada por defecto
+    ========================================================= */
+    .display-xxl { font-family: var(--font-display); font-weight: 800; font-size: clamp(2.6rem, 6.5vw, 5.4rem); line-height: 1.02; letter-spacing: -0.035em; }
+    .display-xl  { font-family: var(--font-display); font-weight: 700; font-size: clamp(2.2rem, 4.6vw, 3.8rem); line-height: 1.08; letter-spacing: -0.03em; }
+    .display-lg  { font-family: var(--font-display); font-weight: 700; font-size: clamp(1.7rem, 3.2vw, 2.6rem); line-height: 1.15; letter-spacing: -0.022em; }
+    .display-md  { font-family: var(--font-display); font-weight: 600; font-size: clamp(1.3rem, 2.2vw, 1.7rem); line-height: 1.2;  letter-spacing: -0.015em; }
+    .body-lg     { font-size: clamp(1.05rem, 1.4vw, 1.18rem); line-height: 1.7; font-weight: 400; }
+    .body-md     { font-size: 1rem; line-height: 1.65; font-weight: 400; }
+    .body-sm     { font-size: .92rem; line-height: 1.55; font-weight: 400; }
+    .eyebrow     { font-size: .76rem; font-weight: 700; letter-spacing: .18em; text-transform: uppercase; }
+
+    .container { width: 100%; max-width: var(--max-width); margin: 0 auto; padding: 0 28px; }
+
+    /* =========================================================
+       PLACEHOLDERS
+    ========================================================= */
+    .ph-text {
+      background: rgba(131,118,255,0.10);
+      border: 1px dashed rgba(131,118,255,0.45);
+      color: var(--purple);
+      padding: 2px 10px;
+      border-radius: 6px;
+      font-style: italic;
+      font-weight: 500;
+      display: inline-block;
+    }
+    .ph-num {
+      font-family: var(--font-display);
+      background: rgba(97,248,169,0.18);
+      border: 1px dashed var(--green-2);
+      color: var(--teal);
+      padding: 2px 10px;
+      border-radius: 6px;
+      font-weight: 700;
+    }
+    .ph-img, .ph-video {
+      position: relative;
+      background:
+        repeating-linear-gradient(45deg, rgba(6,46,53,0.04) 0 12px, rgba(6,46,53,0.08) 12px 24px);
+      border: 1.5px dashed rgba(6,46,53,0.30);
+      border-radius: var(--radius);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      color: var(--teal-2);
+      text-align: center;
+      font-size: .85rem;
+      font-weight: 600;
+      letter-spacing: .04em;
+      min-height: 200px;
+      overflow: hidden;
+    }
+    .ph-img .ph-label,
+    .ph-video .ph-label {
+      position: relative;
+      z-index: 2;
+      background: rgba(255,255,255,0.85);
+      backdrop-filter: blur(6px);
+      padding: 10px 18px;
+      border-radius: 999px;
+      box-shadow: var(--shadow-sm);
+      max-width: 80%;
+    }
+    .ph-video .ph-label::before { content: '▶  '; color: var(--green-3); }
+
+    .dark .ph-img, .dark .ph-video {
+      background: repeating-linear-gradient(45deg, rgba(255,255,255,0.04) 0 12px, rgba(255,255,255,0.08) 12px 24px);
+      border-color: rgba(255,255,255,0.30);
+      color: var(--white);
+    }
+    .dark .ph-img .ph-label, .dark .ph-video .ph-label { background: rgba(6,46,53,0.85); color: var(--white); }
+
+    /* =========================================================
+       BOTONES
+    ========================================================= */
+    .btn {
+      display: inline-flex;
+      align-items: center;
+      gap: .55rem;
+      padding: 14px 26px;
+      border-radius: 999px;
+      font-weight: 700;
+      font-size: .95rem;
+      transition: transform .35s var(--ease), background .35s var(--ease), box-shadow .35s var(--ease), border-color .35s var(--ease);
+      cursor: pointer;
+      white-space: nowrap;
+    }
+    .btn-primary { background: var(--green); color: var(--teal); }
+    .btn-primary:hover { background: var(--green-2); transform: translateY(-2px); box-shadow: 0 10px 30px rgba(97,248,169,0.35); }
+    .btn-ghost { background: transparent; color: var(--teal); border: 1.5px solid rgba(6,46,53,0.18); }
+    .btn-ghost:hover { border-color: var(--teal); transform: translateY(-2px); }
+    .btn-dark { background: var(--teal); color: var(--white); }
+    .btn-dark:hover { background: var(--teal-2); transform: translateY(-2px); }
+    .btn svg { width: 16px; height: 16px; }
+    .btn svg path { transition: transform .35s var(--ease); }
+    .btn:hover svg { transform: translateX(3px); }
+
+    /* =========================================================
+       NAVBAR — flotante, centrada
+    ========================================================= */
+    .nav-wrapper {
+      position: fixed;
+      top: 18px;
+      left: 0; right: 0;
+      z-index: 100;
+      display: flex;
+      justify-content: center;
+      padding: 0 20px;
+      pointer-events: none;
+      transition: top .4s var(--ease);
+    }
+    .nav {
+      pointer-events: auto;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      padding: 9px 12px 9px 18px;
+      background: rgba(253,253,253,0.82);
+      backdrop-filter: blur(20px);
+      -webkit-backdrop-filter: blur(20px);
+      border: 1px solid rgba(6,46,53,0.08);
+      border-radius: 999px;
+      box-shadow: var(--shadow-md);
+      max-width: 100%;
+      transition: box-shadow .4s var(--ease);
+    }
+    .nav-logo {
+      display: flex;
+      align-items: center;
+      gap: 9px;
+      padding-right: 14px;
+      border-right: 1px solid rgba(6,46,53,0.10);
+      margin-right: 4px;
+    }
+    .nav-logo .frog { height: 26px; width: auto; }
+    .nav-logo .word { height: 17px; width: auto; }
+    .nav-items { display: flex; align-items: center; gap: 2px; }
+    .nav-item {
+      position: relative;
+      padding: 9px 14px;
+      border-radius: 999px;
+      font-size: .88rem;
+      font-weight: 500;
+      color: var(--teal);
+      display: inline-flex;
+      align-items: center;
+      gap: 4px;
+      transition: var(--transition);
+    }
+    .nav-item:hover { background: rgba(6,46,53,0.06); }
+    .nav-item .chev { width: 12px; height: 12px; transition: transform var(--transition); }
+    .nav-item:hover .chev { transform: rotate(180deg); }
+
+    .dropdown {
+      position: absolute;
+      top: calc(100% + 12px);
+      left: 50%;
+      transform: translateX(-50%) translateY(-6px);
+      min-width: 250px;
+      background: var(--white);
+      border-radius: var(--radius);
+      padding: 10px;
+      box-shadow: var(--shadow-lg);
+      border: 1px solid rgba(6,46,53,0.06);
+      opacity: 0;
+      visibility: hidden;
+      transition: var(--transition);
+    }
+    .nav-item:hover .dropdown { opacity: 1; visibility: visible; transform: translateX(-50%) translateY(0); }
+    .dropdown a {
+      display: flex;
+      align-items: center;
+      gap: 12px;
+      padding: 10px 12px;
+      border-radius: 10px;
+      font-size: .9rem;
+      font-weight: 500;
+      color: var(--teal);
+      transition: var(--transition);
+    }
+    .dropdown a:hover { background: var(--offwhite); color: var(--green-3); }
+    .dropdown a svg { width: 18px; height: 18px; flex-shrink: 0; }
+
+    .nav-cta { display: flex; gap: 6px; padding-left: 6px; margin-left: 4px; border-left: 1px solid rgba(6,46,53,0.10); }
+    .nav-cta .btn { padding: 9px 18px; font-size: .85rem; }
+
+    @media (max-width: 1100px) { .nav-items { display: none; } }
+
+    /* =========================================================
+       ANIMACIONES  ·  reveal al scroll (estilo Framer)
+    ========================================================= */
+    .reveal { opacity: 0; transform: translateY(34px); transition: opacity .9s var(--ease), transform .9s var(--ease); will-change: opacity, transform; }
+    .reveal.in { opacity: 1; transform: none; }
+    .reveal.r-left  { transform: translateX(-40px); }
+    .reveal.r-right { transform: translateX(40px); }
+    .reveal.r-scale { transform: scale(.94); }
+    .reveal.r-left.in, .reveal.r-right.in, .reveal.r-scale.in { transform: none; }
+    /* stagger por hijos */
+    .stagger > * { opacity: 0; transform: translateY(28px); transition: opacity .8s var(--ease), transform .8s var(--ease); }
+    .stagger.in > * { opacity: 1; transform: none; }
+    .stagger.in > *:nth-child(1){transition-delay:.04s}
+    .stagger.in > *:nth-child(2){transition-delay:.10s}
+    .stagger.in > *:nth-child(3){transition-delay:.16s}
+    .stagger.in > *:nth-child(4){transition-delay:.22s}
+    .stagger.in > *:nth-child(5){transition-delay:.28s}
+    .stagger.in > *:nth-child(6){transition-delay:.34s}
+    @media (prefers-reduced-motion: reduce) {
+      .reveal, .stagger > * { opacity: 1 !important; transform: none !important; transition: none !important; }
+    }
+
+    /* =========================================================
+       SECTION 1 — HERO  (light + fondo animado con puntitos)
+    ========================================================= */
+    .hero {
+      padding: 190px 0 120px;
+      position: relative;
+      overflow: hidden;
+      text-align: center;
+      background:
+        radial-gradient(ellipse 70% 55% at 50% -10%, rgba(97,248,169,0.20), transparent 60%),
+        radial-gradient(ellipse 50% 40% at 12% 110%, rgba(131,118,255,0.12), transparent 60%),
+        var(--offwhite-2);
+    }
+    /* canvas con puntitos que se mueven */
+    .hero-canvas { position: absolute; inset: 0; width: 100%; height: 100%; z-index: 0; pointer-events: none; }
+    /* degradado animado por detrás */
+    .hero-aurora {
+      position: absolute; inset: -20%; z-index: 0; pointer-events: none; filter: blur(60px); opacity: .55;
+      background:
+        radial-gradient(35% 35% at 20% 30%, rgba(97,248,169,.5), transparent 60%),
+        radial-gradient(30% 30% at 80% 20%, rgba(131,118,255,.35), transparent 60%),
+        radial-gradient(40% 40% at 60% 80%, rgba(59,213,139,.35), transparent 60%);
+      animation: aurora 18s ease-in-out infinite alternate;
+    }
+    @keyframes aurora {
+      0%   { transform: translate3d(-3%, -2%, 0) scale(1); }
+      50%  { transform: translate3d(4%, 3%, 0) scale(1.08); }
+      100% { transform: translate3d(-2%, 2%, 0) scale(1.03); }
+    }
+    .hero .container { position: relative; z-index: 2; }
+    .hero-inner { max-width: 860px; margin: 0 auto; display: flex; flex-direction: column; align-items: center; }
+
+    .hero-eyebrow {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 8px 16px;
+      background: rgba(253,253,253,0.7);
+      backdrop-filter: blur(8px);
+      border: 1px solid rgba(59,213,139,0.4);
+      border-radius: 999px;
+      color: var(--green-4);
+      margin-bottom: 30px;
+      font-size: .82rem; font-weight: 600;
+    }
+    .hero-eyebrow .dot { width: 7px; height: 7px; background: var(--green-2); border-radius: 50%; animation: pulse 2s ease-in-out infinite; }
+    @keyframes pulse { 0%,100% { opacity: 1; transform: scale(1); } 50% { opacity: .5; transform: scale(1.3); } }
+
+    .hero h1 { margin-bottom: 28px; }
+    .hero h1 .static { color: var(--teal); display: block; }
+    .hero h1 .rotator {
+      color: var(--green-3);
+      position: relative;
+      display: inline-block;
+      min-height: 1.1em;
+    }
+    .hero h1 .rotator::after {
+      content: ''; display: inline-block; width: 4px; height: 0.82em;
+      background: var(--green-3); margin-left: 6px; vertical-align: -0.06em;
+      animation: blink 1s steps(2) infinite;
+    }
+    @keyframes blink { 50% { opacity: 0; } }
+
+    .hero-sub { color: var(--teal-2); max-width: 560px; margin: 0 auto 38px; }
+    .hero-cta { display: flex; gap: 12px; flex-wrap: wrap; justify-content: center; }
+
+    .hero-visual { position: relative; margin-top: 72px; max-width: 1000px; margin-left: auto; margin-right: auto; }
+    .hero-visual .ph-img {
+      aspect-ratio: 16/9; min-height: 360px;
+      border-radius: var(--radius-xl);
+      box-shadow: var(--shadow-lg);
+    }
+    .hero-visual::before {
+      content: ''; position: absolute; inset: -16px -16px -40px -16px;
+      background: radial-gradient(circle at 50% 40%, rgba(97,248,169,0.22), transparent 70%);
+      z-index: -1; filter: blur(24px);
+    }
+
+    /* =========================================================
+       SECTIONS base
+    ========================================================= */
+    .section { padding: var(--section-pad) 0; position: relative; }
+
+    .section-header { max-width: 820px; margin: 0 auto 64px; text-align: center; }
+    .section-header .eyebrow { color: var(--green-3); margin-bottom: 18px; display: inline-block; }
+    .section-header h2 { color: var(--teal); margin-bottom: 18px; }
+    .section-header p { color: var(--teal-2); }
+
+    /* grilla estilo Cryptix para secciones oscuras */
+    .grid-lines::before {
+      content: ''; position: absolute; inset: 0; z-index: 0; pointer-events: none;
+      background-image:
+        linear-gradient(rgba(255,255,255,0.045) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(255,255,255,0.045) 1px, transparent 1px);
+      background-size: 64px 64px;
+      -webkit-mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 35%, transparent 80%);
+              mask-image: radial-gradient(ellipse 80% 70% at 50% 40%, #000 35%, transparent 80%);
+    }
+    /* spotlight que sigue el cursor en secciones oscuras */
+    .spotlight::after {
+      content: ''; position: absolute; inset: 0; z-index: 1; pointer-events: none;
+      background: radial-gradient(420px circle at var(--mx, 50%) var(--my, 30%), rgba(97,248,169,0.10), transparent 65%);
+      opacity: 0; transition: opacity .5s var(--ease);
+    }
+    .spotlight:hover::after { opacity: 1; }
+    .grid-lines > .container, .spotlight > .container { position: relative; z-index: 2; }
+
+    /* =========================================================
+       SECTION 2 — PRODUCTO
+    ========================================================= */
+    .producto-section { background: var(--white); }
+    .not-strip { display: flex; flex-wrap: wrap; justify-content: center; gap: 10px; margin-bottom: 56px; }
+    .not-strip span {
+      display: inline-flex; align-items: center; gap: 8px;
+      padding: 10px 18px; background: var(--white);
+      border: 1px solid rgba(6,46,53,0.10); border-radius: 999px;
+      font-size: .92rem; font-weight: 600; color: var(--teal);
+    }
+    .not-strip span::before { content: '✕'; color: var(--purple); font-weight: 700; }
+
+    .cards-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; }
+    .feature-card {
+      background: var(--white); border: 1px solid rgba(6,46,53,0.08);
+      border-radius: var(--radius-lg); padding: 32px 28px;
+      transition: transform .4s var(--ease), box-shadow .4s var(--ease), border-color .4s var(--ease);
+      position: relative; overflow: hidden; text-align: center;
+    }
+    .feature-card:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); border-color: rgba(59,213,139,0.40); }
+    .feature-card .icon {
+      width: 52px; height: 52px; margin: 0 auto 22px;
+      background: rgba(97,248,169,0.18); border-radius: 14px;
+      display: flex; align-items: center; justify-content: center; color: var(--green-3);
+    }
+    .feature-card .icon svg { width: 26px; height: 26px; }
+    .feature-card .tag {
+      display: inline-block; font-size: .7rem; font-weight: 700; letter-spacing: .12em;
+      text-transform: uppercase; color: var(--purple); background: rgba(131,118,255,0.10);
+      padding: 4px 10px; border-radius: 6px; margin-bottom: 10px;
+    }
+    .feature-card h3 { margin-bottom: 12px; color: var(--teal); }
+    .feature-card p { color: var(--teal-2); font-size: .95rem; }
+
+    @media (max-width: 900px) { .cards-grid { grid-template-columns: 1fr; } }
+
+    /* =========================================================
+       SECTION 3 — TABS
+    ========================================================= */
+    .tabs-section { background: var(--offwhite); }
+    .tab-switcher { display: inline-flex; background: var(--white); padding: 6px; border-radius: 999px; margin: 0 auto 50px; gap: 4px; box-shadow: var(--shadow-sm); }
+    .tab-switcher-wrap { display: flex; justify-content: center; }
+    .tab-switcher button { padding: 12px 24px; border-radius: 999px; font-size: .92rem; font-weight: 600; color: var(--teal-2); transition: var(--transition); }
+    .tab-switcher button.active { background: var(--teal); color: var(--white); box-shadow: var(--shadow-sm); }
+
+    .tab-content { display: none; }
+    .tab-content.active { display: block; animation: fadeIn .5s var(--ease); }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(10px); } to { opacity: 1; transform: translateY(0); } }
+
+    .modes-grid { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; margin-bottom: 32px; }
+    .mode-card {
+      background: var(--white); border: 1px solid rgba(6,46,53,0.06); border-radius: var(--radius);
+      padding: 24px 20px; transition: var(--transition); cursor: pointer; text-align: center;
+    }
+    .mode-card:hover { background: var(--teal); color: var(--white); transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .mode-card:hover .icon { background: var(--green); color: var(--teal); }
+    .mode-card:hover h4, .mode-card:hover p { color: var(--white); }
+    .mode-card .icon {
+      width: 42px; height: 42px; margin: 0 auto 18px; background: var(--offwhite-2); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center; color: var(--green-3); transition: var(--transition);
+    }
+    .mode-card .icon svg { width: 22px; height: 22px; }
+    .mode-card h4 { font-family: var(--font-display); font-size: 1.05rem; font-weight: 700; margin-bottom: 8px; color: var(--teal); }
+    .mode-card p { font-size: .82rem; color: var(--teal-2); line-height: 1.5; }
+
+    @media (max-width: 1100px) { .modes-grid { grid-template-columns: repeat(3,1fr); } }
+    @media (max-width: 600px)  { .modes-grid { grid-template-columns: repeat(2,1fr); } }
+
+    .verticals-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; }
+    .vertical-card {
+      background: linear-gradient(135deg, var(--teal) 0%, var(--teal-3) 100%); color: var(--white);
+      border-radius: var(--radius-lg); padding: 30px; min-height: 200px;
+      display: flex; flex-direction: column; justify-content: space-between;
+      position: relative; overflow: hidden; transition: transform .4s var(--ease), box-shadow .4s var(--ease);
+    }
+    .vertical-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-lg); }
+    .vertical-card::after {
+      content: ''; position: absolute; top: -40px; right: -40px; width: 160px; height: 160px;
+      background: radial-gradient(circle, rgba(97,248,169,0.20), transparent 70%); border-radius: 50%;
+    }
+    .vertical-card h4 { font-family: var(--font-display); font-size: 1.4rem; font-weight: 700; position: relative; z-index: 2; }
+    .vertical-card .logos-row { display: flex; gap: 8px; margin-top: 18px; flex-wrap: wrap; position: relative; z-index: 2; }
+    .vertical-card .logo-chip {
+      width: 40px; height: 40px; background: rgba(255,255,255,0.10); border: 1px dashed rgba(255,255,255,0.30);
+      border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: .65rem; font-weight: 600; color: rgba(255,255,255,0.6);
+    }
+    @media (max-width: 900px) { .verticals-grid { grid-template-columns: 1fr; } }
+
+    /* =========================================================
+       SECTION 4 — MÉTRICAS  (DARK + grilla Cryptix)
+    ========================================================= */
+    .metrics-section { background: linear-gradient(180deg, var(--teal) 0%, var(--teal-2) 100%); color: var(--white); overflow: hidden; }
+    .metrics-section .section-header h2 { color: var(--white); }
+    .metrics-section .section-header p  { color: rgba(255,255,255,0.75); }
+    .metrics-section .section-header .eyebrow { color: var(--green); }
+
+    .metrics-stat-row { display: grid; grid-template-columns: repeat(3, 1fr); gap: 28px; margin-bottom: 70px; }
+    .stat-card { text-align: center; padding: 34px 20px; background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.08); border-radius: var(--radius-lg); transition: border-color .4s var(--ease), background .4s var(--ease); }
+    .stat-card:hover { border-color: rgba(97,248,169,.4); background: rgba(97,248,169,.05); }
+    .stat-card .stat-num { font-family: var(--font-display); font-size: clamp(2.5rem, 5vw, 4rem); font-weight: 800; color: var(--green); letter-spacing: -0.03em; line-height: 1; margin-bottom: 14px; }
+    .stat-card .stat-label { color: rgba(255,255,255,0.85); font-size: .98rem; }
+
+    .metrics-bottom { display: grid; grid-template-columns: 1fr 1fr; gap: 40px; align-items: center; }
+    .map-placeholder { aspect-ratio: 4/5; max-height: 520px; }
+    .impact-list { padding: 0; text-align: left; }
+    .impact-list li { display: grid; grid-template-columns: auto 1fr; gap: 20px; align-items: center; padding: 22px 0; border-bottom: 1px solid rgba(255,255,255,0.10); }
+    .impact-list li:last-child { border-bottom: none; }
+    .impact-list .num { font-family: var(--font-display); font-size: 2.2rem; font-weight: 800; color: var(--green); letter-spacing: -0.02em; min-width: 110px; }
+    .impact-list .desc { color: rgba(255,255,255,0.85); font-size: .98rem; }
+
+    .logos-marquee { margin-top: 70px; padding-top: 50px; border-top: 1px solid rgba(255,255,255,0.10); }
+    .logos-marquee p { text-align: center; color: rgba(255,255,255,0.55); margin-bottom: 26px; font-size: .82rem; letter-spacing: .14em; text-transform: uppercase; font-weight: 600; }
+    .marquee { position: relative; overflow: hidden; -webkit-mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); mask-image: linear-gradient(90deg, transparent, #000 8%, #000 92%, transparent); }
+    .marquee-track { display: flex; gap: 18px; width: max-content; animation: marquee 32s linear infinite; }
+    .marquee:hover .marquee-track { animation-play-state: paused; }
+    @keyframes marquee { to { transform: translateX(-50%); } }
+    .logo-slot {
+      width: 140px; height: 60px; flex-shrink: 0; background: rgba(255,255,255,0.04);
+      border: 1px dashed rgba(255,255,255,0.24); border-radius: 10px;
+      display: flex; align-items: center; justify-content: center; color: rgba(255,255,255,0.45);
+      font-size: .7rem; font-weight: 600; letter-spacing: .04em;
+    }
+    @media (max-width: 900px) { .metrics-stat-row { grid-template-columns: 1fr; } .metrics-bottom { grid-template-columns: 1fr; } }
+
+    /* =========================================================
+       SECTION 5 — CÓMO SE USA
+    ========================================================= */
+    .howto-section { background: var(--white); }
+    .steps-flow { display: grid; grid-template-columns: repeat(5, 1fr); gap: 16px; position: relative; margin-bottom: 50px; }
+    .steps-flow::before { content: ''; position: absolute; top: 38px; left: 8%; right: 8%; height: 2px; background: repeating-linear-gradient(90deg, var(--green-2) 0 8px, transparent 8px 16px); z-index: 0; }
+    .step { text-align: center; position: relative; z-index: 1; }
+    .step .step-num {
+      width: 76px; height: 76px; margin: 0 auto 20px; background: var(--white); border: 2px solid var(--green);
+      border-radius: 50%; display: flex; align-items: center; justify-content: center;
+      font-family: var(--font-display); font-size: 1.6rem; font-weight: 800; color: var(--green-3); box-shadow: 0 0 0 8px var(--white);
+      transition: transform .4s var(--ease), background .4s var(--ease), color .4s var(--ease);
+    }
+    .step:hover .step-num { background: var(--green); color: var(--teal); transform: translateY(-4px) scale(1.06); }
+    .step h4 { font-family: var(--font-display); font-size: 1rem; font-weight: 700; margin-bottom: 8px; color: var(--teal); }
+    .step p { font-size: .85rem; color: var(--teal-2); line-height: 1.5; }
+    .howto-tagline { text-align: center; font-family: var(--font-display); color: var(--green-3); font-style: normal; }
+    @media (max-width: 900px) { .steps-flow { grid-template-columns: 1fr 1fr; } .steps-flow::before { display: none; } }
+
+    /* =========================================================
+       SECTION 6 — COMPARATIVA
+    ========================================================= */
+    .compare-section { background: var(--offwhite-2); }
+    .compare-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 20px; }
+    .compare-col { background: var(--white); border-radius: var(--radius-lg); padding: 36px 32px; border: 1px solid rgba(6,46,53,0.08); text-align: left; }
+    .compare-col.bad { background: #FBFAFA; }
+    .compare-col.good { background: linear-gradient(135deg, var(--teal) 0%, var(--teal-2) 100%); color: var(--white); border: none; position: relative; overflow: hidden; }
+    .compare-col.good::before { content: ''; position: absolute; top: -60px; right: -60px; width: 240px; height: 240px; background: radial-gradient(circle, rgba(97,248,169,0.18), transparent 70%); border-radius: 50%; }
+    .compare-col h3 { font-family: var(--font-display); font-weight: 700; font-size: 1.5rem; margin-bottom: 24px; display: flex; align-items: center; gap: 10px; }
+    .compare-col.bad h3 { color: var(--teal-2); }
+    .compare-col.bad h3::before { content: '✕'; width: 32px; height: 32px; background: rgba(220,80,80,0.10); color: #C44; border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+    .compare-col.good h3 { color: var(--white); position: relative; z-index: 2; }
+    .compare-col.good h3::before { content: '✓'; width: 32px; height: 32px; background: var(--green); color: var(--teal); border-radius: 8px; display: flex; align-items: center; justify-content: center; font-size: 1rem; }
+    .compare-list { position: relative; z-index: 2; }
+    .compare-list li { padding: 14px 0; border-bottom: 1px solid rgba(6,46,53,0.08); font-size: .98rem; display: flex; align-items: flex-start; gap: 12px; }
+    .compare-col.good .compare-list li { border-bottom-color: rgba(255,255,255,0.10); color: rgba(255,255,255,0.92); }
+    .compare-list li::before { content: '—'; color: var(--purple); font-weight: 700; flex-shrink: 0; }
+    .compare-col.good .compare-list li::before { content: '→'; color: var(--green); }
+    .compare-list li:last-child { border-bottom: none; }
+    @media (max-width: 800px) { .compare-grid { grid-template-columns: 1fr; } }
+
+    /* =========================================================
+       SECTION 7 — ONBOARDING
+    ========================================================= */
+    .onboard-section { background: var(--white); }
+    .timeline { position: relative; max-width: 920px; margin: 0 auto; padding-left: 50px; text-align: left; }
+    .timeline::before { content: ''; position: absolute; left: 23px; top: 12px; bottom: 12px; width: 2px; background: linear-gradient(to bottom, var(--green) 0%, var(--purple) 100%); }
+    .timeline-item { position: relative; padding-bottom: 38px; }
+    .timeline-item:last-child { padding-bottom: 0; }
+    .timeline-item::before { content: ''; position: absolute; left: -35px; top: 6px; width: 18px; height: 18px; background: var(--white); border: 3px solid var(--green-2); border-radius: 50%; box-shadow: 0 0 0 5px var(--white); }
+    .timeline-item .day { display: inline-block; font-size: .72rem; font-weight: 700; letter-spacing: .12em; text-transform: uppercase; color: var(--green-3); margin-bottom: 8px; }
+    .timeline-item h4 { font-family: var(--font-display); font-weight: 700; font-size: 1.25rem; color: var(--teal); margin-bottom: 8px; }
+    .timeline-item p { color: var(--teal-2); font-size: .95rem; }
+    .timeline-item.final::before { background: var(--green); border-color: var(--green-3); }
+    .timeline-item.final h4 { color: var(--green-3); font-size: 1.5rem; }
+
+    /* =========================================================
+       SECTION 8 — MARKETING (acento púrpura)
+    ========================================================= */
+    .marketing-section { background: linear-gradient(135deg, var(--purple-3) 0%, #ECE6FF 100%); color: var(--teal); }
+    .marketing-section .section-header .eyebrow { color: var(--purple); }
+    .marketing-grid { display: grid; grid-template-columns: 1.1fr 1fr; gap: 50px; align-items: center; }
+    .marketing-features { display: flex; flex-direction: column; gap: 18px; }
+    .mk-card { background: var(--white); border-radius: var(--radius); padding: 22px 24px; display: grid; grid-template-columns: auto 1fr; gap: 18px; align-items: center; border: 1px solid rgba(131,118,255,0.20); transition: transform .4s var(--ease), box-shadow .4s var(--ease); text-align: left; }
+    .mk-card:hover { transform: translateX(6px); box-shadow: var(--shadow-md); }
+    .mk-card .icon { width: 48px; height: 48px; background: var(--purple); color: var(--white); border-radius: 12px; display: flex; align-items: center; justify-content: center; }
+    .mk-card .icon svg { width: 22px; height: 22px; }
+    .mk-card h4 { font-family: var(--font-display); font-size: 1.1rem; color: var(--teal); margin-bottom: 4px; }
+    .mk-card p { font-size: .88rem; color: var(--teal-2); }
+    .marketing-visual .ph-img { aspect-ratio: 1/1; min-height: 380px; border-radius: var(--radius-lg); }
+    @media (max-width: 900px) { .marketing-grid { grid-template-columns: 1fr; } }
+
+    /* =========================================================
+       SECTION 9 — INTEGRACIONES (DARK + grilla)
+    ========================================================= */
+    .integ-section { background: var(--teal-2); color: var(--white); overflow: hidden; }
+    .integ-section .section-header h2 { color: var(--white); }
+    .integ-section .section-header p { color: rgba(255,255,255,0.72); }
+    .integ-section .section-header .eyebrow { color: var(--green); }
+    .integ-headline { font-family: var(--font-display); font-size: clamp(2rem, 4vw, 3.4rem); font-weight: 700; text-align: center; max-width: 900px; margin: 0 auto 24px; letter-spacing: -0.025em; line-height: 1.1; }
+    .integ-headline .strike { position: relative; display: inline-block; color: rgba(255,255,255,0.50); }
+    .integ-headline .strike::after { content: ''; position: absolute; left: -4%; right: -4%; top: 55%; height: 3px; background: var(--green); transform: rotate(-3deg); }
+    .integ-types { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; margin-top: 60px; }
+    .integ-card { background: rgba(255,255,255,0.04); border: 1px solid rgba(255,255,255,0.10); border-radius: var(--radius-lg); padding: 28px 24px; transition: border-color .4s var(--ease), background .4s var(--ease), transform .4s var(--ease); text-align: left; }
+    .integ-card:hover { border-color: var(--green); background: rgba(97,248,169,0.05); transform: translateY(-4px); }
+    .integ-card h4 { font-family: var(--font-display); font-size: 1.15rem; color: var(--white); margin-bottom: 18px; }
+    .integ-card .logos-mini { display: grid; grid-template-columns: repeat(2, 1fr); gap: 8px; }
+    .integ-card .logos-mini .logo-slot { width: 100%; height: 44px; font-size: .65rem; }
+    .integ-cta { margin-top: 60px; background: linear-gradient(135deg, rgba(131,118,255,0.18), rgba(97,248,169,0.06)); border: 1px solid rgba(131,118,255,0.40); border-radius: var(--radius-lg); padding: 36px 40px; display: grid; grid-template-columns: 1fr auto; gap: 30px; align-items: center; text-align: left; }
+    .integ-cta .eyebrow { color: var(--purple-2); margin-bottom: 8px; display: block; }
+    .integ-cta h3 { font-family: var(--font-display); font-size: 1.5rem; color: var(--white); margin-bottom: 6px; }
+    .integ-cta p { color: rgba(255,255,255,0.72); font-size: .95rem; max-width: 580px; }
+    @media (max-width: 900px) { .integ-types { grid-template-columns: 1fr 1fr; } .integ-cta { grid-template-columns: 1fr; } }
+
+    /* =========================================================
+       SECTION 10 — SKIPITADS
+    ========================================================= */
+    .ads-section { background: var(--white); }
+    .ads-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 50px; align-items: center; }
+    .ads-visual .ph-img { aspect-ratio: 9/16; max-width: 320px; margin: 0 auto; border-radius: 36px; min-height: 540px; }
+    .ads-content { text-align: left; }
+    .ads-content .eyebrow { color: var(--purple); display: inline-block; margin-bottom: 18px; }
+    .ads-content h2 { color: var(--teal); margin-bottom: 22px; }
+    .ads-content > p { color: var(--teal-2); margin-bottom: 32px; max-width: 520px; }
+    .ads-features { display: grid; gap: 14px; }
+    .ads-feature { display: flex; align-items: flex-start; gap: 14px; }
+    .ads-feature .check { width: 26px; height: 26px; background: var(--purple); border-radius: 50%; display: flex; align-items: center; justify-content: center; color: var(--white); font-size: .75rem; font-weight: 800; flex-shrink: 0; margin-top: 2px; }
+    .ads-feature h4 { font-family: var(--font-display); font-size: 1rem; color: var(--teal); margin-bottom: 4px; }
+    .ads-feature p { font-size: .92rem; color: var(--teal-2); }
+    @media (max-width: 900px) { .ads-grid { grid-template-columns: 1fr; } }
+
+    /* =========================================================
+       SECTION 11 — DATOS DE COLOR
+    ========================================================= */
+    .insights-section { background: var(--offwhite-2); }
+    .insights-grid { display: grid; grid-template-columns: repeat(4, 1fr); gap: 18px; }
+    .insight-card { background: var(--white); border-radius: var(--radius-lg); padding: 28px; border: 1px solid rgba(6,46,53,0.06); transition: transform .4s var(--ease), box-shadow .4s var(--ease); text-align: left; }
+    .insight-card:hover { transform: translateY(-4px); box-shadow: var(--shadow-md); }
+    .insight-card .insight-tag { font-size: .68rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--purple); margin-bottom: 14px; }
+    .insight-card .insight-num { font-family: var(--font-display); font-size: 2.6rem; font-weight: 800; color: var(--green-3); line-height: 1; margin-bottom: 12px; letter-spacing: -0.03em; }
+    .insight-card h4 { font-family: var(--font-display); font-size: 1rem; color: var(--teal); margin-bottom: 6px; }
+    .insight-card p { font-size: .85rem; color: var(--teal-2); }
+    @media (max-width: 900px) { .insights-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 500px) { .insights-grid { grid-template-columns: 1fr; } }
+
+    /* =========================================================
+       SECTION 12 — PLANES
+    ========================================================= */
+    .plans-section { background: var(--white); }
+    .plans-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 22px; max-width: 1160px; margin: 0 auto; }
+    .plan { background: var(--white); border: 1px solid rgba(6,46,53,0.10); border-radius: var(--radius-lg); padding: 36px 32px; display: flex; flex-direction: column; transition: transform .4s var(--ease), box-shadow .4s var(--ease); position: relative; text-align: left; }
+    .plan:hover { transform: translateY(-6px); box-shadow: var(--shadow-md); }
+    .plan.featured { background: var(--teal); color: var(--white); border-color: transparent; transform: scale(1.02); }
+    .plan.featured:hover { transform: scale(1.02) translateY(-6px); }
+    .plan.featured h3, .plan.featured .price-num { color: var(--white); }
+    .plan.featured ul li { color: rgba(255,255,255,0.85); }
+    .plan .badge { position: absolute; top: -12px; left: 50%; transform: translateX(-50%); background: var(--green); color: var(--teal); font-size: .7rem; font-weight: 800; padding: 6px 14px; border-radius: 999px; letter-spacing: .08em; text-transform: uppercase; }
+    .plan .plan-name { font-size: .8rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--green-3); margin-bottom: 12px; }
+    .plan.featured .plan-name { color: var(--green); }
+    .plan h3 { font-family: var(--font-display); font-size: 1.5rem; font-weight: 700; color: var(--teal); margin-bottom: 14px; }
+    .plan .plan-desc { color: var(--teal-2); font-size: .9rem; margin-bottom: 24px; min-height: 50px; }
+    .plan.featured .plan-desc { color: rgba(255,255,255,0.75); }
+    .plan .price { display: flex; align-items: baseline; gap: 6px; margin-bottom: 28px; }
+    .plan .price-num { font-family: var(--font-display); font-size: 2.2rem; font-weight: 800; color: var(--teal); letter-spacing: -0.02em; }
+    .plan .price-period { font-size: .9rem; color: var(--teal-2); }
+    .plan.featured .price-period { color: rgba(255,255,255,0.6); }
+    .plan ul { display: flex; flex-direction: column; gap: 12px; margin-bottom: 32px; flex: 1; }
+    .plan ul li { font-size: .9rem; color: var(--teal-2); display: flex; align-items: flex-start; gap: 10px; }
+    .plan ul li::before { content: '✓'; color: var(--green-3); font-weight: 800; flex-shrink: 0; }
+    .plan.featured ul li::before { color: var(--green); }
+    .plan .btn { justify-content: center; width: 100%; }
+    @media (max-width: 900px) { .plans-grid { grid-template-columns: 1fr; } .plan.featured { transform: none; } }
+
+    /* =========================================================
+       SECTION 13 — FAQ
+    ========================================================= */
+    .faq-section { background: var(--offwhite-2); }
+    .faq-list { max-width: 820px; margin: 0 auto; display: flex; flex-direction: column; gap: 12px; }
+    .faq-item { background: var(--white); border: 1px solid rgba(6,46,53,0.08); border-radius: var(--radius); overflow: hidden; transition: var(--transition); text-align: left; }
+    .faq-item:hover { border-color: rgba(59,213,139,0.40); }
+    .faq-question { width: 100%; padding: 22px 26px; display: flex; align-items: center; justify-content: space-between; gap: 20px; font-family: var(--font-display); font-size: 1.08rem; font-weight: 600; color: var(--teal); text-align: left; }
+    .faq-question .toggle { width: 32px; height: 32px; background: var(--offwhite-2); border-radius: 50%; display: flex; align-items: center; justify-content: center; flex-shrink: 0; transition: var(--transition); color: var(--green-3); font-size: 1.2rem; font-weight: 700; }
+    .faq-item.open .faq-question .toggle { background: var(--green); color: var(--teal); transform: rotate(45deg); }
+    .faq-answer { max-height: 0; overflow: hidden; transition: max-height var(--transition), padding var(--transition); padding: 0 26px; color: var(--teal-2); }
+    .faq-item.open .faq-answer { max-height: 400px; padding: 0 26px 22px; }
+
+    /* =========================================================
+       SECTION 14 — FOOTER (DARK)
+    ========================================================= */
+    .footer { background: var(--teal-3); color: var(--white); padding: 100px 0 40px; position: relative; overflow: hidden; }
+    .footer::before { content: ''; position: absolute; top: 0; left: 0; right: 0; height: 1px; background: linear-gradient(90deg, transparent, var(--green), transparent); }
+    .footer-cta { text-align: center; max-width: 760px; margin: 0 auto 80px; }
+    .footer-cta h2 { color: var(--white); margin-bottom: 18px; }
+    .footer-cta p { color: rgba(255,255,255,0.72); margin-bottom: 32px; }
+    .footer-cta .btn-primary { padding: 18px 36px; font-size: 1.05rem; }
+    .footer-grid { display: grid; grid-template-columns: 1.4fr 1fr 1fr 1fr 1fr; gap: 40px; padding-bottom: 50px; border-bottom: 1px solid rgba(255,255,255,0.10); text-align: left; }
+    .footer-brand .logo { display: flex; align-items: center; gap: 9px; margin-bottom: 18px; }
+    .footer-brand .logo .frog { height: 30px; width: auto; }
+    .footer-brand .logo .word { height: 19px; width: auto; }
+    .footer-brand p { color: rgba(255,255,255,0.60); font-size: .9rem; max-width: 280px; margin-bottom: 20px; }
+    .footer-socials { display: flex; gap: 10px; }
+    .social-icon { width: 38px; height: 38px; background: rgba(255,255,255,0.06); border-radius: 50%; display: flex; align-items: center; justify-content: center; transition: var(--transition); color: rgba(255,255,255,0.7); }
+    .social-icon:hover { background: var(--green); color: var(--teal); transform: translateY(-3px); }
+    .social-icon svg { width: 16px; height: 16px; }
+    .footer-col h4 { font-size: .78rem; font-weight: 700; letter-spacing: .14em; text-transform: uppercase; color: var(--green); margin-bottom: 18px; }
+    .footer-col ul { display: flex; flex-direction: column; gap: 10px; }
+    .footer-col ul li a { color: rgba(255,255,255,0.68); font-size: .9rem; transition: var(--transition); }
+    .footer-col ul li a:hover { color: var(--white); }
+    .footer-bottom { padding-top: 30px; display: flex; justify-content: space-between; align-items: center; gap: 20px; flex-wrap: wrap; color: rgba(255,255,255,0.40); font-size: .82rem; }
+    .footer-bottom .legal { display: flex; gap: 24px; }
+    .footer-bottom .legal a:hover { color: var(--white); }
+    @media (max-width: 900px) { .footer-grid { grid-template-columns: 1fr 1fr; } }
+    @media (max-width: 500px) { .footer-grid { grid-template-columns: 1fr; } }
+  </style>
+</head>
+<body>
+
+  <!-- ===================== NAVBAR ===================== -->
+  <div class="nav-wrapper" id="navWrapper">
+    <nav class="nav">
+      <a href="#" class="nav-logo">
+        <img class="frog" src="assets/skipit-frog.png" alt="Skipit" />
+        <img class="word" src="assets/skipit-text-dark.png" alt="skipit" />
+      </a>
+
+      <ul class="nav-items">
+        <li><a href="#producto" class="nav-item">
+          Cómo funciona
+          <svg class="chev" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <div class="dropdown">
+            <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M7 21h10"/></svg> Atención en mesa</a>
+            <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><path d="M3 6h18"/></svg> Takeaway</a>
+            <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg> Llamador</a>
+            <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg> Multilocal</a>
+            <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="3" width="14" height="18" rx="2"/><circle cx="12" cy="17" r="1"/></svg> Tótem</a>
+          </div>
+        </a></li>
+
+        <li><a href="#tipos" class="nav-item">
+          Tipo de clientes
+          <svg class="chev" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <div class="dropdown">
+            <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 21h18M5 21V8h14v13M9 21v-6h6v6"/></svg> Bares / Boliches / Eventos</a>
+            <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M17 8h1a3 3 0 010 6h-1M3 8h14v9a3 3 0 01-3 3H6a3 3 0 01-3-3V8zM6 1v3M10 1v3M14 1v3"/></svg> Cafeterías / Hamburgueserías</a>
+            <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 11l9-9 9 9M5 9v12h14V9"/></svg> Restaurantes</a>
+          </div>
+        </a></li>
+
+        <li><a href="#marketing" class="nav-item">Marketing</a></li>
+
+        <li><a href="#integraciones" class="nav-item">
+          Integraciones
+          <svg class="chev" viewBox="0 0 12 12" fill="none"><path d="M3 4.5L6 7.5L9 4.5" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></svg>
+          <div class="dropdown">
+            <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="6" width="20" height="12" rx="2"/><path d="M2 10h20"/></svg> POS</a>
+            <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="5" width="20" height="14" rx="2"/><path d="M2 10h20M6 15h4"/></svg> Medios de pago</a>
+            <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 8h18l-2 12H5L3 8zM8 8V5a4 4 0 018 0v3"/></svg> Ticketeras</a>
+            <a href="#"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8l-6-6z"/><path d="M14 2v6h6M9 14h6M9 18h6"/></svg> Facturadores</a>
+          </div>
+        </a></li>
+
+        <li><a href="#ads" class="nav-item">SkipitAds</a></li>
+        <li><a href="#planes" class="nav-item">Planes</a></li>
+        <li><a href="#faq" class="nav-item">FAQ</a></li>
+      </ul>
+
+      <div class="nav-cta">
+        <a href="#" class="btn btn-ghost">Sign up</a>
+        <a href="#" class="btn btn-primary">Solicitar demo</a>
+      </div>
+    </nav>
+  </div>
+
+  <!-- ===================== HERO ===================== -->
+  <section class="hero">
+    <div class="hero-aurora"></div>
+    <canvas class="hero-canvas" id="heroCanvas"></canvas>
+    <div class="container">
+      <div class="hero-inner">
+        <div class="hero-eyebrow reveal">
+          <span class="dot"></span>
+          <span class="ph-text">[ EYEBROW · ej: "Más de 60 locales ya skipean" ]</span>
+        </div>
+
+        <h1 class="display-xxl reveal">
+          <span class="static">Con Skipit:</span>
+          <span class="rotator" id="rotator">vendé más</span>
+        </h1>
+        <p class="hero-sub body-lg reveal">
+          <span class="ph-text">[ BAJADA PRINCIPAL · 2-3 líneas explicando qué hace Skipit conceptualmente ]</span>
+        </p>
+
+        <div class="hero-cta reveal">
+          <a href="#" class="btn btn-primary">
+            Solicitar demo
+            <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+          </a>
+          <a href="#" class="btn btn-ghost">Ver producto</a>
+        </div>
+      </div>
+
+      <div class="hero-visual reveal r-scale" data-tilt>
+        <div class="ph-img">
+          <span class="ph-label">[ IMAGEN: Dashboard / Métricas / Pantalla del BO + widgets · ~1600×900px ]</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 02 · PRODUCTO ===================== -->
+  <section class="section producto-section" id="producto">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="eyebrow">Plataforma</span>
+        <h2 class="display-xl"><span class="ph-text">[ TÍTULO · ej: "No venimos a reemplazar nada de lo que tenés. Lo potenciamos." ]</span></h2>
+        <p class="body-lg"><span class="ph-text">[ BAJADA · breve descripción de qué es la plataforma ]</span></p>
+      </div>
+
+      <div class="not-strip reveal">
+        <span>No somos un POS</span>
+        <span>No somos un método de pago</span>
+        <span>No somos un facturador</span>
+        <span>No somos una ticketera</span>
+      </div>
+
+      <div class="cards-grid stagger reveal">
+        <div class="feature-card">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 3v18h18"/><path d="M7 14l4-4 4 4 5-5"/></svg></div>
+          <span class="tag">Visualización</span>
+          <h3 class="display-md">Dashboard</h3>
+          <p><span class="ph-text">[ Texto card 1 ]</span></p>
+        </div>
+        <div class="feature-card">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 21l-4.35-4.35"/><circle cx="11" cy="11" r="8"/></svg></div>
+          <span class="tag">Visualización</span>
+          <h3 class="display-md">Analytics</h3>
+          <p><span class="ph-text">[ Texto card 2 ]</span></p>
+        </div>
+        <div class="feature-card">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div>
+          <span class="tag">Visualización</span>
+          <h3 class="display-md">Organización</h3>
+          <p><span class="ph-text">[ Texto card 3 ]</span></p>
+        </div>
+        <div class="feature-card">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></div>
+          <span class="tag">Accionable</span>
+          <h3 class="display-md">Fidelización</h3>
+          <p><span class="ph-text">[ Texto card 4 ]</span></p>
+        </div>
+        <div class="feature-card">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><path d="M12 6v6l4 2"/></svg></div>
+          <span class="tag">Accionable</span>
+          <h3 class="display-md">Acciones</h3>
+          <p><span class="ph-text">[ Texto card 5 ]</span></p>
+        </div>
+        <div class="feature-card">
+          <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="6" y="2" width="12" height="20" rx="2"/><path d="M11 18h2"/></svg></div>
+          <span class="tag">Accionable</span>
+          <h3 class="display-md">Webapp del cliente</h3>
+          <p><span class="ph-text">[ Texto card 6 ]</span></p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 03 · TABS ===================== -->
+  <section class="section tabs-section" id="tipos">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="eyebrow">Skipit para vos</span>
+        <h2 class="display-xl"><span class="ph-text">[ TÍTULO · ej: "Una plataforma, infinitos formatos" ]</span></h2>
+      </div>
+
+      <div class="tab-switcher-wrap reveal">
+        <div class="tab-switcher" role="tablist">
+          <button class="active" data-tab="operacion">Por tipo de operación</button>
+          <button data-tab="local">Por tipo de local</button>
+        </div>
+      </div>
+
+      <div class="tab-content active" id="tab-operacion">
+        <div class="modes-grid stagger reveal">
+          <button class="mode-card">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="14" rx="2"/><path d="M7 21h10"/></svg></div>
+            <h4>Dine-in</h4>
+            <p><span class="ph-text">[ Descripción breve ]</span></p>
+          </button>
+          <button class="mode-card">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="12" cy="12" r="10"/><circle cx="12" cy="12" r="4"/></svg></div>
+            <h4>Llamador</h4>
+            <p><span class="ph-text">[ Descripción breve ]</span></p>
+          </button>
+          <button class="mode-card">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><path d="M3 6h18"/></svg></div>
+            <h4>Takeaway</h4>
+            <p><span class="ph-text">[ Descripción breve ]</span></p>
+          </button>
+          <button class="mode-card">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/><rect x="3" y="14" width="7" height="7"/><rect x="14" y="14" width="7" height="7"/></svg></div>
+            <h4>Multilocal</h4>
+            <p><span class="ph-text">[ Descripción breve ]</span></p>
+          </button>
+          <button class="mode-card">
+            <div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="5" y="3" width="14" height="18" rx="2"/><circle cx="12" cy="17" r="1"/></svg></div>
+            <h4>Tótem</h4>
+            <p><span class="ph-text">[ Descripción breve ]</span></p>
+          </button>
+        </div>
+        <div class="ph-img reveal" style="aspect-ratio:16/8; min-height: 300px; margin-top: 20px;">
+          <span class="ph-label">[ IMAGEN/MOCKUP del modo seleccionado ]</span>
+        </div>
+      </div>
+
+      <div class="tab-content" id="tab-local">
+        <div class="verticals-grid stagger">
+          <div class="vertical-card"><h4>Bares · Hamburgueserías · Cafeterías</h4><div><p style="opacity:.7; font-size:.85rem; margin-bottom:14px;"><span class="ph-text" style="background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.3); color:#fff;">[ Modos que aplican ]</span></p><div class="logos-row"><div class="logo-chip">LOGO</div><div class="logo-chip">LOGO</div><div class="logo-chip">LOGO</div><div class="logo-chip">LOGO</div></div></div></div>
+          <div class="vertical-card"><h4>Boliches · Eventos · Recitales</h4><div><p style="opacity:.7; font-size:.85rem; margin-bottom:14px;"><span class="ph-text" style="background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.3); color:#fff;">[ Modos que aplican ]</span></p><div class="logos-row"><div class="logo-chip">LOGO</div><div class="logo-chip">LOGO</div><div class="logo-chip">LOGO</div></div></div></div>
+          <div class="vertical-card"><h4>Restaurantes</h4><div><p style="opacity:.7; font-size:.85rem; margin-bottom:14px;"><span class="ph-text" style="background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.3); color:#fff;">[ Modos que aplican ]</span></p><div class="logos-row"><div class="logo-chip">LOGO</div><div class="logo-chip">LOGO</div><div class="logo-chip">LOGO</div></div></div></div>
+          <div class="vertical-card"><h4>Estadios · Torneos deportivos</h4><div><p style="opacity:.7; font-size:.85rem; margin-bottom:14px;"><span class="ph-text" style="background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.3); color:#fff;">[ Modos que aplican ]</span></p><div class="logos-row"><div class="logo-chip">LOGO</div><div class="logo-chip">LOGO</div></div></div></div>
+          <div class="vertical-card"><h4>Universidades · Coworks</h4><div><p style="opacity:.7; font-size:.85rem; margin-bottom:14px;"><span class="ph-text" style="background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.3); color:#fff;">[ Modos que aplican ]</span></p><div class="logos-row"><div class="logo-chip">LOGO</div><div class="logo-chip">LOGO</div></div></div></div>
+          <div class="vertical-card"><h4>Hoteles · Resorts</h4><div><p style="opacity:.7; font-size:.85rem; margin-bottom:14px;"><span class="ph-text" style="background:rgba(255,255,255,.08); border-color:rgba(255,255,255,.3); color:#fff;">[ Modos que aplican ]</span></p><div class="logos-row"><div class="logo-chip">LOGO</div><div class="logo-chip">LOGO</div></div></div></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 04 · MÉTRICAS (DARK + grilla) ===================== -->
+  <section class="section metrics-section dark grid-lines spotlight" id="metricas">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="eyebrow">El impacto de Skipit</span>
+        <h2 class="display-xl">
+          <span class="ph-text">Aumentamos un</span> <span class="ph-num">+X%</span> <span class="ph-text">la facturación,</span><br>
+          <span class="ph-text">reducimos un</span> <span class="ph-num">-X%</span> <span class="ph-text">los costos</span>
+        </h2>
+        <p class="body-lg"><span class="ph-text">[ Bajada explicativa breve ]</span></p>
+      </div>
+
+      <div class="metrics-stat-row stagger reveal">
+        <div class="stat-card"><div class="stat-num"><span class="count" data-target="320" data-prefix="+">+0</span></div><div class="stat-label">Locales adheridos</div></div>
+        <div class="stat-card"><div class="stat-num"><span class="count" data-target="48" data-prefix="$ " data-suffix="M">$ 0M</span></div><div class="stat-label">ARS transaccionados</div></div>
+        <div class="stat-card"><div class="stat-num"><span class="count" data-target="85" data-prefix="+" data-suffix="k">+0k</span></div><div class="stat-label">Usuarios únicos</div></div>
+      </div>
+
+      <div class="metrics-bottom">
+        <div class="ph-img map-placeholder reveal r-left"><span class="ph-label">[ MAPA: Argentina + Uruguay con pins por provincia/ciudad ]</span></div>
+        <div class="reveal r-right">
+          <h3 class="display-lg" style="color: var(--white); margin-bottom: 22px;"><span class="ph-text">[ Título · "Estamos en X provincias" ]</span></h3>
+          <ul class="impact-list">
+            <li><span class="num"><span class="count" data-target="14">0</span></span><span class="desc">Provincias con presencia activa</span></li>
+            <li><span class="num"><span class="count" data-target="320">0</span></span><span class="desc">Locales operando hoy</span></li>
+            <li><span class="num"><span class="count" data-target="90" data-suffix="k">0k</span></span><span class="desc">Ventas procesadas el último mes</span></li>
+            <li><span class="num"><span class="count" data-target="18" data-prefix="+" data-suffix="%">+0%</span></span><span class="desc">Aumento promedio del ticket</span></li>
+          </ul>
+        </div>
+      </div>
+
+      <div class="logos-marquee reveal">
+        <p>+60 locales ya skipean</p>
+        <div class="marquee">
+          <div class="marquee-track">
+            <div class="logo-slot">LOGO 1</div><div class="logo-slot">LOGO 2</div><div class="logo-slot">LOGO 3</div><div class="logo-slot">LOGO 4</div><div class="logo-slot">LOGO 5</div><div class="logo-slot">LOGO 6</div><div class="logo-slot">LOGO 7</div><div class="logo-slot">LOGO 8</div>
+            <div class="logo-slot">LOGO 1</div><div class="logo-slot">LOGO 2</div><div class="logo-slot">LOGO 3</div><div class="logo-slot">LOGO 4</div><div class="logo-slot">LOGO 5</div><div class="logo-slot">LOGO 6</div><div class="logo-slot">LOGO 7</div><div class="logo-slot">LOGO 8</div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 05 · CÓMO SE USA ===================== -->
+  <section class="section howto-section" id="como">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="eyebrow">Cómo funciona</span>
+        <h2 class="display-xl"><span class="ph-text">[ TÍTULO · ej: "Mejorá la experiencia de tus clientes en 5 pasos" ]</span></h2>
+      </div>
+
+      <div class="steps-flow stagger reveal">
+        <div class="step"><div class="step-num">1</div><h4>Escanean el QR</h4><p><span class="ph-text">[ Descripción ]</span></p></div>
+        <div class="step"><div class="step-num">2</div><h4>Ven el menú</h4><p><span class="ph-text">[ Descripción ]</span></p></div>
+        <div class="step"><div class="step-num">3</div><h4>Piden y pagan</h4><p><span class="ph-text">[ Descripción ]</span></p></div>
+        <div class="step"><div class="step-num">4</div><h4>Comanda a cocina</h4><p><span class="ph-text">[ Descripción ]</span></p></div>
+        <div class="step"><div class="step-num">5</div><h4>Reciben el pedido</h4><p><span class="ph-text">[ Descripción ]</span></p></div>
+      </div>
+
+      <p class="howto-tagline display-md reveal">Sin filas, sin fricción.</p>
+
+      <div class="ph-video reveal" style="aspect-ratio: 16/9; margin-top: 50px;"><span class="ph-label">[ VIDEO explicativo del flujo · ~1920×1080 ]</span></div>
+    </div>
+  </section>
+
+  <!-- ===================== 06 · COMPARATIVA ===================== -->
+  <section class="section compare-section" id="comparativa">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="eyebrow">Antes vs Después</span>
+        <h2 class="display-xl"><span class="ph-text">[ TÍTULO · ej: "La diferencia se ve desde el primer día" ]</span></h2>
+      </div>
+
+      <div class="compare-grid">
+        <div class="compare-col bad reveal r-left">
+          <h3>Sin Skipit</h3>
+          <ul class="compare-list">
+            <li><span class="ph-text">[ Pain point 1 · ej: largas filas en la barra ]</span></li>
+            <li><span class="ph-text">[ Pain point 2 · ej: errores en comandas ]</span></li>
+            <li><span class="ph-text">[ Pain point 3 · ej: más mozos = más costo ]</span></li>
+            <li><span class="ph-text">[ Pain point 4 · ej: cero data del cliente ]</span></li>
+            <li><span class="ph-text">[ Pain point 5 · ej: campañas a ciegas ]</span></li>
+            <li><span class="ph-text">[ Pain point 6 · ej: ticket promedio bajo ]</span></li>
+          </ul>
+        </div>
+        <div class="compare-col good reveal r-right">
+          <h3>Con Skipit</h3>
+          <ul class="compare-list">
+            <li><span class="ph-text" style="background:rgba(97,248,169,.10); border-color:rgba(97,248,169,.4); color:var(--green);">[ Beneficio 1 · ej: pedidos desde el celular ]</span></li>
+            <li><span class="ph-text" style="background:rgba(97,248,169,.10); border-color:rgba(97,248,169,.4); color:var(--green);">[ Beneficio 2 · ej: comanda directo a cocina ]</span></li>
+            <li><span class="ph-text" style="background:rgba(97,248,169,.10); border-color:rgba(97,248,169,.4); color:var(--green);">[ Beneficio 3 · ej: -30% costos operativos ]</span></li>
+            <li><span class="ph-text" style="background:rgba(97,248,169,.10); border-color:rgba(97,248,169,.4); color:var(--green);">[ Beneficio 4 · ej: base de datos propia ]</span></li>
+            <li><span class="ph-text" style="background:rgba(97,248,169,.10); border-color:rgba(97,248,169,.4); color:var(--green);">[ Beneficio 5 · ej: campañas segmentadas ]</span></li>
+            <li><span class="ph-text" style="background:rgba(97,248,169,.10); border-color:rgba(97,248,169,.4); color:var(--green);">[ Beneficio 6 · ej: +15% ticket promedio ]</span></li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 07 · ONBOARDING ===================== -->
+  <section class="section onboard-section" id="onboarding">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="eyebrow">Onboarding</span>
+        <h2 class="display-xl"><span class="ph-text">[ TÍTULO · ej: "De cero a operando en menos de 24hs" ]</span></h2>
+        <p class="body-lg"><span class="ph-text">[ Bajada · paso a paso desde que nos contactás hasta tu primera transacción ]</span></p>
+      </div>
+
+      <ul class="timeline stagger reveal">
+        <li class="timeline-item"><span class="day">Día 1</span><h4>Creá tu local</h4><p><span class="ph-text">[ Descripción del paso ]</span></p></li>
+        <li class="timeline-item"><span class="day">Paso 2</span><h4>Cargá tu menú</h4><p><span class="ph-text">[ Descripción del paso ]</span></p></li>
+        <li class="timeline-item"><span class="day">Paso 3</span><h4>Conectá tus métodos de pago</h4><p><span class="ph-text">[ Descripción del paso ]</span></p></li>
+        <li class="timeline-item"><span class="day">Paso 4</span><h4>Vinculá tu POS u operá con Skipit</h4><p><span class="ph-text">[ Descripción del paso ]</span></p></li>
+        <li class="timeline-item"><span class="day">Paso 5</span><h4>Creá tus sectores y QRs</h4><p><span class="ph-text">[ Descripción del paso ]</span></p></li>
+        <li class="timeline-item"><span class="day">Paso 6</span><h4>Imprimí y colocá la cartelería</h4><p><span class="ph-text">[ Descripción del paso ]</span></p></li>
+        <li class="timeline-item final"><span class="day">¡Listo!</span><h4>Empezá a vender</h4><p><span class="ph-text">[ Mensaje de cierre ]</span></p></li>
+      </ul>
+    </div>
+  </section>
+
+  <!-- ===================== 08 · MARKETING ===================== -->
+  <section class="section marketing-section" id="marketing">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="eyebrow">Marketing & Fidelización</span>
+        <h2 class="display-xl"><span class="ph-text">[ TÍTULO · ej: "Convertí cada venta en una conversación con tu cliente" ]</span></h2>
+      </div>
+
+      <div class="marketing-grid">
+        <div class="marketing-features stagger reveal r-left">
+          <div class="mk-card"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M3 5a2 2 0 012-2h14a2 2 0 012 2v14l-4-4H5a2 2 0 01-2-2V5z"/></svg></div><div><h4>CRM</h4><p><span class="ph-text">[ Descripción breve ]</span></p></div></div>
+          <div class="mk-card"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 11.5a8.38 8.38 0 01-.9 3.8 8.5 8.5 0 01-7.6 4.7 8.38 8.38 0 01-3.8-.9L3 21l1.9-5.7a8.38 8.38 0 01-.9-3.8 8.5 8.5 0 014.7-7.6 8.38 8.38 0 013.8-.9h.5a8.48 8.48 0 018 8v.5z"/></svg></div><div><h4>Campañas por WhatsApp y mail</h4><p><span class="ph-text">[ Descripción breve ]</span></p></div></div>
+          <div class="mk-card"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M22 3H2l8 9.46V19l4 2v-8.54L22 3z"/></svg></div><div><h4>Segmentación automática</h4><p><span class="ph-text">[ Descripción breve ]</span></p></div></div>
+          <div class="mk-card"><div class="icon"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M20.59 13.41l-7.17 7.17a2 2 0 01-2.83 0L2 12V2h10l8.59 8.59a2 2 0 010 2.82z"/><line x1="7" y1="7" x2="7.01" y2="7"/></svg></div><div><h4>Promociones y descuentos</h4><p><span class="ph-text">[ Descripción breve ]</span></p></div></div>
+        </div>
+
+        <div class="marketing-visual reveal r-right" data-tilt>
+          <div class="ph-img"><span class="ph-label">[ IMAGEN: dashboard CRM / mockup de campaña WhatsApp ]</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 09 · INTEGRACIONES (DARK + grilla) ===================== -->
+  <section class="section integ-section dark grid-lines spotlight" id="integraciones">
+    <div class="container">
+      <div class="section-header reveal" style="margin-bottom: 40px;">
+        <span class="eyebrow">Integraciones</span>
+      </div>
+
+      <h2 class="integ-headline reveal">
+        Skipit no es:
+        <span class="strike">un POS</span>,
+        <span class="strike">una ticketera</span>,
+        <span class="strike">un medio de pago</span>
+        ni
+        <span class="strike">un facturador</span>.
+      </h2>
+      <p class="body-lg reveal" style="text-align:center; color:rgba(255,255,255,.72); max-width:720px; margin: 30px auto 0;">
+        <span class="ph-text">[ BAJADA · ej: "Nos integramos con todos para potenciar lo que ya tenés" ]</span>
+      </p>
+
+      <div class="integ-types stagger reveal">
+        <div class="integ-card"><h4>POS</h4><div class="logos-mini"><div class="logo-slot">POS 1</div><div class="logo-slot">POS 2</div><div class="logo-slot">POS 3</div><div class="logo-slot">POS 4</div></div><p style="margin-top:14px; font-size:.8rem; color:var(--green);">+ Encuesta del próximo POS a integrar →</p></div>
+        <div class="integ-card"><h4>Métodos de pago</h4><div class="logos-mini"><div class="logo-slot">MP</div><div class="logo-slot">MODO</div><div class="logo-slot">PAYWAY</div><div class="logo-slot">+</div></div></div>
+        <div class="integ-card"><h4>Facturadores</h4><div class="logos-mini"><div class="logo-slot">FACT 1</div><div class="logo-slot">FACT 2</div><div class="logo-slot">FACT 3</div><div class="logo-slot">+</div></div></div>
+        <div class="integ-card"><h4>Ticketeras</h4><div class="logos-mini"><div class="logo-slot">TIX 1</div><div class="logo-slot">TIX 2</div><div class="logo-slot">TIX 3</div><div class="logo-slot">+</div></div></div>
+      </div>
+
+      <div class="integ-cta reveal">
+        <div>
+          <span class="eyebrow">Para desarrolladores y partners tecnológicos</span>
+          <h3>¿Tu sistema no está en la lista?</h3>
+          <p><span class="ph-text" style="background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.3); color:#fff;">[ Bajada · APIs abiertas, integremos juntos ]</span></p>
+        </div>
+        <a href="#" class="btn" style="background: var(--purple); color: white;">
+          Hablar sobre integración
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg>
+        </a>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 10 · SKIPITADS ===================== -->
+  <section class="section ads-section" id="ads">
+    <div class="container">
+      <div class="ads-grid">
+        <div class="ads-visual reveal r-left" data-tilt>
+          <div class="ph-img"><span class="ph-label">[ MOCKUP de mobile mostrando un anuncio dentro del menú ]</span></div>
+        </div>
+
+        <div class="ads-content reveal r-right">
+          <span class="eyebrow">SkipitAds</span>
+          <h2 class="display-xl"><span class="ph-text">[ TÍTULO · ej: "Tu menú es ahora un canal publicitario" ]</span></h2>
+          <p class="body-lg"><span class="ph-text">[ Bajada conceptual del modelo SkipitAds ]</span></p>
+
+          <div class="ads-features">
+            <div class="ads-feature"><span class="check">✓</span><div><h4>Espacios digitales dentro del menú</h4><p><span class="ph-text">[ Descripción ]</span></p></div></div>
+            <div class="ads-feature"><span class="check">✓</span><div><h4>Segmentación por zona, edad y consumo</h4><p><span class="ph-text">[ Descripción ]</span></p></div></div>
+            <div class="ads-feature"><span class="check">✓</span><div><h4>Métricas de impacto en tiempo real</h4><p><span class="ph-text">[ Descripción ]</span></p></div></div>
+            <div class="ads-feature"><span class="check">✓</span><div><h4>Canal directo con el consumidor final</h4><p><span class="ph-text">[ Descripción ]</span></p></div></div>
+          </div>
+
+          <div style="margin-top:34px;">
+            <a href="#" class="btn btn-dark">Soy una marca, quiero pautar<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 11 · DATOS DE COLOR ===================== -->
+  <section class="section insights-section" id="insights">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="eyebrow">Datos de color</span>
+        <h2 class="display-xl"><span class="ph-text">[ TÍTULO · ej: "Lo que aprendimos analizando millones de pedidos" ]</span></h2>
+      </div>
+
+      <div class="insights-grid stagger reveal">
+        <div class="insight-card"><div class="insight-tag">Origen de ventas</div><div class="insight-num"><span class="count" data-target="72" data-suffix="%">0%</span></div><h4><span class="ph-text">[ Insight 1 · ej: "viene de móvil" ]</span></h4><p><span class="ph-text">[ Detalle breve ]</span></p></div>
+        <div class="insight-card"><div class="insight-tag">Demografía</div><div class="insight-num"><span class="count" data-target="58" data-suffix="%">0%</span></div><h4><span class="ph-text">[ Insight 2 · ej: "mujeres 18-35" ]</span></h4><p><span class="ph-text">[ Detalle breve ]</span></p></div>
+        <div class="insight-card"><div class="insight-tag">Productos</div><div class="insight-num"><span class="count" data-target="240">0</span></div><h4><span class="ph-text">[ Insight 3 · ej: "más vendido por mes" ]</span></h4><p><span class="ph-text">[ Detalle breve ]</span></p></div>
+        <div class="insight-card"><div class="insight-tag">Filas</div><div class="insight-num"><span class="count" data-target="12" data-suffix=" min">0 min</span></div><h4><span class="ph-text">[ Insight 4 · ej: "ahorrados en promedio" ]</span></h4><p><span class="ph-text">[ Detalle breve ]</span></p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 12 · PLANES ===================== -->
+  <section class="section plans-section" id="planes">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="eyebrow">Planes</span>
+        <h2 class="display-xl"><span class="ph-text">[ TÍTULO · ej: "Empezá gratis. Crecé sin techo." ]</span></h2>
+        <p class="body-lg"><span class="ph-text">[ Bajada · explicación breve de la lógica de planes ]</span></p>
+      </div>
+
+      <div class="plans-grid stagger reveal">
+        <div class="plan">
+          <div class="plan-name">Gratuito</div>
+          <h3>Skipit Free</h3>
+          <p class="plan-desc"><span class="ph-text">[ Descripción · "con sponsors y partners de Skipit" ]</span></p>
+          <div class="price"><span class="price-num">$0</span><span class="price-period">/mes</span></div>
+          <ul><li><span class="ph-text">[ Feature 1 ]</span></li><li><span class="ph-text">[ Feature 2 ]</span></li><li><span class="ph-text">[ Feature 3 ]</span></li><li><span class="ph-text">[ Feature 4 ]</span></li></ul>
+          <a href="#" class="btn btn-ghost">Empezar gratis</a>
+        </div>
+
+        <div class="plan featured">
+          <span class="badge">Más elegido</span>
+          <div class="plan-name">Pago</div>
+          <h3>Skipit Pro</h3>
+          <p class="plan-desc"><span class="ph-text" style="color: rgba(255,255,255,.85); background: rgba(255,255,255,.08); border-color: rgba(255,255,255,.3);">[ Descripción · "exclusividad de sponsors propios" ]</span></p>
+          <div class="price"><span class="price-num"><span class="ph-num" style="font-size:inherit; background:rgba(97,248,169,.18); color:var(--green); border-color: var(--green-2);">$ XX</span></span><span class="price-period">/mes</span></div>
+          <ul><li><span class="ph-text" style="color: var(--green); background: rgba(97,248,169,.10); border-color: rgba(97,248,169,.4);">[ Feature 1 ]</span></li><li><span class="ph-text" style="color: var(--green); background: rgba(97,248,169,.10); border-color: rgba(97,248,169,.4);">[ Feature 2 ]</span></li><li><span class="ph-text" style="color: var(--green); background: rgba(97,248,169,.10); border-color: rgba(97,248,169,.4);">[ Feature 3 ]</span></li><li><span class="ph-text" style="color: var(--green); background: rgba(97,248,169,.10); border-color: rgba(97,248,169,.4);">[ Feature 4 ]</span></li><li><span class="ph-text" style="color: var(--green); background: rgba(97,248,169,.10); border-color: rgba(97,248,169,.4);">[ Feature 5 ]</span></li></ul>
+          <a href="#" class="btn btn-primary">Solicitar plan Pro</a>
+        </div>
+
+        <div class="plan">
+          <div class="plan-name">Enterprise</div>
+          <h3>Skipit Hub</h3>
+          <p class="plan-desc"><span class="ph-text">[ Descripción · "Hub / Ronda / Organizaciones" ]</span></p>
+          <div class="price"><span class="price-num">A medida</span></div>
+          <ul><li><span class="ph-text">[ Feature 1 ]</span></li><li><span class="ph-text">[ Feature 2 ]</span></li><li><span class="ph-text">[ Feature 3 ]</span></li><li><span class="ph-text">[ Feature 4 ]</span></li></ul>
+          <a href="#" class="btn btn-dark">Hablar con ventas</a>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 13 · FAQ ===================== -->
+  <section class="section faq-section" id="faq">
+    <div class="container">
+      <div class="section-header reveal">
+        <span class="eyebrow">Preguntas frecuentes</span>
+        <h2 class="display-xl"><span class="ph-text">[ TÍTULO · ej: "Lo que más nos preguntan" ]</span></h2>
+      </div>
+
+      <div class="faq-list stagger reveal">
+        <div class="faq-item"><button class="faq-question"><span><span class="ph-text">[ Pregunta 1 ]</span></span><span class="toggle">+</span></button><div class="faq-answer"><p><span class="ph-text">[ Respuesta 1 ]</span></p></div></div>
+        <div class="faq-item"><button class="faq-question"><span><span class="ph-text">[ Pregunta 2 ]</span></span><span class="toggle">+</span></button><div class="faq-answer"><p><span class="ph-text">[ Respuesta 2 ]</span></p></div></div>
+        <div class="faq-item"><button class="faq-question"><span><span class="ph-text">[ Pregunta 3 ]</span></span><span class="toggle">+</span></button><div class="faq-answer"><p><span class="ph-text">[ Respuesta 3 ]</span></p></div></div>
+        <div class="faq-item"><button class="faq-question"><span><span class="ph-text">[ Pregunta 4 ]</span></span><span class="toggle">+</span></button><div class="faq-answer"><p><span class="ph-text">[ Respuesta 4 ]</span></p></div></div>
+        <div class="faq-item"><button class="faq-question"><span><span class="ph-text">[ Pregunta 5 ]</span></span><span class="toggle">+</span></button><div class="faq-answer"><p><span class="ph-text">[ Respuesta 5 ]</span></p></div></div>
+        <div class="faq-item"><button class="faq-question"><span><span class="ph-text">[ Pregunta 6 ]</span></span><span class="toggle">+</span></button><div class="faq-answer"><p><span class="ph-text">[ Respuesta 6 ]</span></p></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ===================== 14 · FOOTER ===================== -->
+  <footer class="footer dark" id="contacto">
+    <div class="container">
+      <div class="footer-cta reveal">
+        <h2 class="display-xl"><span class="ph-text" style="background:rgba(97,248,169,.10); border-color:rgba(97,248,169,.4); color:var(--green);">[ TÍTULO de cierre · ej: "¿Listo para skipear?" ]</span></h2>
+        <p class="body-lg"><span class="ph-text" style="background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.3); color:#fff;">[ Bajada de cierre ]</span></p>
+        <a href="#" class="btn btn-primary">Solicitar demo por WhatsApp<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.5"><path d="M5 12h14M13 5l7 7-7 7"/></svg></a>
+      </div>
+
+      <div class="footer-grid">
+        <div class="footer-brand">
+          <div class="logo">
+            <img class="frog" src="assets/skipit-frog.png" alt="Skipit" />
+            <img class="word" src="assets/skipit-text.png" alt="skipit" />
+          </div>
+          <p><span class="ph-text" style="background:rgba(255,255,255,.06); border-color:rgba(255,255,255,.3); color:#fff;">[ Tagline corporativo ]</span></p>
+          <div class="footer-socials">
+            <a href="#" class="social-icon" aria-label="Instagram"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="2" y="2" width="20" height="20" rx="5"/><path d="M16 11.37A4 4 0 1112.63 8 4 4 0 0116 11.37zM17.5 6.5h.01"/></svg></a>
+            <a href="#" class="social-icon" aria-label="LinkedIn"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M16 8a6 6 0 016 6v7h-4v-7a2 2 0 00-4 0v7h-4v-7a6 6 0 016-6zM2 9h4v12H2zM4 4a2 2 0 100 4 2 2 0 000-4z"/></svg></a>
+            <a href="#" class="social-icon" aria-label="WhatsApp"><svg viewBox="0 0 24 24" fill="currentColor"><path d="M17.5 14.4c-.3-.1-1.7-.8-1.9-.9-.3-.1-.4-.1-.6.1-.2.3-.7.9-.8 1-.2.2-.3.2-.5.1-.7-.4-1.5-.8-2.1-1.4-.6-.5-1-1.2-1.4-1.9-.1-.2 0-.3.1-.4.1-.1.2-.3.4-.4.1-.1.2-.3.3-.4.1-.2 0-.3 0-.4-.1-.1-.6-1.5-.9-2-.2-.5-.4-.4-.6-.4h-.5c-.2 0-.5.1-.7.3-.3.3-1 1-1 2.4 0 1.4 1 2.8 1.1 3 .1.2 2 3.1 4.9 4.3.7.3 1.2.5 1.6.6.7.2 1.3.2 1.8.1.5-.1 1.7-.7 1.9-1.4.2-.7.2-1.3.2-1.4-.1-.1-.3-.2-.5-.3z"/></svg></a>
+          </div>
+        </div>
+
+        <div class="footer-col"><h4>Producto</h4><ul><li><a href="#">Dine-in</a></li><li><a href="#">Takeaway</a></li><li><a href="#">Llamador</a></li><li><a href="#">Multilocal</a></li><li><a href="#">Tótem</a></li></ul></div>
+        <div class="footer-col"><h4>Para quién</h4><ul><li><a href="#">Bares y boliches</a></li><li><a href="#">Restaurantes</a></li><li><a href="#">Eventos</a></li><li><a href="#">Estadios</a></li><li><a href="#">Universidades</a></li></ul></div>
+        <div class="footer-col"><h4>Recursos</h4><ul><li><a href="#">Integraciones</a></li><li><a href="#">SkipitAds</a></li><li><a href="#">Planes</a></li><li><a href="#">FAQ</a></li><li><a href="#">Blog</a></li></ul></div>
+        <div class="footer-col"><h4>Contacto</h4><ul><li><a href="#">WhatsApp</a></li><li><a href="#">Crear comercio</a></li><li><a href="#">Agendá una demo</a></li><li><a href="mailto:hello@skipit.com.ar">hello@skipit.com.ar</a></li></ul></div>
+      </div>
+
+      <div class="footer-bottom">
+        <p>© <span id="year">2026</span> Skipit. Todos los derechos reservados.</p>
+        <div class="legal"><a href="#">Términos y condiciones</a><a href="#">Política de privacidad</a></div>
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===================== SCRIPTS ===================== -->
+  <script>
+    /* ---------- ROTATOR del hero ---------- */
+    (function() {
+      const words = ['vendé más','gastá menos','fidelizá clientes','agilizá tu operación','traé clientes nuevos','analizá tus datos','vendé publicidad','facturá más'];
+      const el = document.getElementById('rotator');
+      let i = 0;
+      setInterval(() => {
+        i = (i + 1) % words.length;
+        el.style.transition = 'opacity .35s ease, transform .35s ease';
+        el.style.opacity = '0'; el.style.transform = 'translateY(8px)';
+        setTimeout(() => { el.textContent = words[i]; el.style.opacity = '1'; el.style.transform = 'translateY(0)'; }, 300);
+      }, 2400);
+    })();
+
+    /* ---------- TABS ---------- */
+    document.querySelectorAll('.tab-switcher button').forEach(btn => {
+      btn.addEventListener('click', () => {
+        const tab = btn.dataset.tab;
+        document.querySelectorAll('.tab-switcher button').forEach(b => b.classList.remove('active'));
+        document.querySelectorAll('.tab-content').forEach(c => c.classList.remove('active'));
+        btn.classList.add('active');
+        document.getElementById('tab-' + tab).classList.add('active');
+      });
+    });
+
+    /* ---------- FAQ ---------- */
+    document.querySelectorAll('.faq-question').forEach(q => {
+      q.addEventListener('click', () => q.parentElement.classList.toggle('open'));
+    });
+
+    /* ---------- Año ---------- */
+    document.getElementById('year').textContent = new Date().getFullYear();
+
+    /* ---------- REVEAL al scroll (IntersectionObserver) ---------- */
+    (function() {
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } });
+      }, { threshold: 0.12, rootMargin: '0px 0px -8% 0px' });
+      document.querySelectorAll('.reveal, .stagger').forEach(el => io.observe(el));
+    })();
+
+    /* ---------- COUNT-UP de números ---------- */
+    (function() {
+      const fmt = (n) => n.toLocaleString('es-AR');
+      const run = (el) => {
+        const target = parseFloat(el.dataset.target);
+        const pre = el.dataset.prefix || '', suf = el.dataset.suffix || '';
+        const dur = 1500; const t0 = performance.now();
+        const tick = (t) => {
+          const p = Math.min((t - t0) / dur, 1);
+          const eased = 1 - Math.pow(1 - p, 3);
+          el.textContent = pre + fmt(Math.round(target * eased)) + suf;
+          if (p < 1) requestAnimationFrame(tick);
+        };
+        requestAnimationFrame(tick);
+      };
+      const io = new IntersectionObserver((entries) => {
+        entries.forEach(e => { if (e.isIntersecting) { run(e.target); io.unobserve(e.target); } });
+      }, { threshold: 0.6 });
+      document.querySelectorAll('.count').forEach(el => io.observe(el));
+    })();
+
+    /* ---------- SPOTLIGHT que sigue el cursor (secciones oscuras) ---------- */
+    document.querySelectorAll('.spotlight').forEach(sec => {
+      sec.addEventListener('pointermove', (e) => {
+        const r = sec.getBoundingClientRect();
+        sec.style.setProperty('--mx', ((e.clientX - r.left) / r.width * 100) + '%');
+        sec.style.setProperty('--my', ((e.clientY - r.top) / r.height * 100) + '%');
+      });
+    });
+
+    /* ---------- TILT 3D suave en visuales ---------- */
+    document.querySelectorAll('[data-tilt]').forEach(el => {
+      const max = 6;
+      el.style.transition = 'transform .25s var(--ease)';
+      el.style.transformStyle = 'preserve-3d';
+      el.addEventListener('pointermove', (e) => {
+        const r = el.getBoundingClientRect();
+        const px = (e.clientX - r.left) / r.width - 0.5;
+        const py = (e.clientY - r.top) / r.height - 0.5;
+        el.style.transform = `perspective(900px) rotateX(${(-py*max).toFixed(2)}deg) rotateY(${(px*max).toFixed(2)}deg)`;
+      });
+      el.addEventListener('pointerleave', () => { el.style.transform = 'perspective(900px) rotateX(0) rotateY(0)'; });
+    });
+
+    /* ---------- NAVBAR: oculta al bajar, muestra al subir ---------- */
+    (function() {
+      const nav = document.getElementById('navWrapper');
+      let last = 0;
+      window.addEventListener('scroll', () => {
+        const y = window.scrollY;
+        if (y > 200 && y > last) nav.style.top = '-90px';
+        else nav.style.top = '18px';
+        last = y;
+      }, { passive: true });
+    })();
+
+    /* ---------- HERO: puntitos que se mueven sobre el degradado ---------- */
+    (function() {
+      const canvas = document.getElementById('heroCanvas');
+      if (!canvas || window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      const ctx = canvas.getContext('2d');
+      let w, h, dpr, dots = [], raf;
+      const COUNT = 70, LINK = 130;
+      const mouse = { x: -9999, y: -9999 };
+
+      function resize() {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        const rect = canvas.parentElement.getBoundingClientRect();
+        w = rect.width; h = rect.height;
+        canvas.width = w * dpr; canvas.height = h * dpr;
+        ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+      }
+      function init() {
+        dots = Array.from({ length: COUNT }, () => ({
+          x: Math.random() * w, y: Math.random() * h,
+          vx: (Math.random() - 0.5) * 0.4, vy: (Math.random() - 0.5) * 0.4,
+          r: Math.random() * 1.8 + 0.8
+        }));
+      }
+      function step() {
+        ctx.clearRect(0, 0, w, h);
+        for (let i = 0; i < dots.length; i++) {
+          const d = dots[i];
+          d.x += d.vx; d.y += d.vy;
+          if (d.x < 0 || d.x > w) d.vx *= -1;
+          if (d.y < 0 || d.y > h) d.vy *= -1;
+          // leve atracción al mouse
+          const mdx = mouse.x - d.x, mdy = mouse.y - d.y;
+          const md = Math.hypot(mdx, mdy);
+          if (md < 160) { d.x += mdx / md * 0.4; d.y += mdy / md * 0.4; }
+          ctx.beginPath();
+          ctx.arc(d.x, d.y, d.r, 0, Math.PI * 2);
+          ctx.fillStyle = 'rgba(41,158,102,0.55)';
+          ctx.fill();
+          for (let j = i + 1; j < dots.length; j++) {
+            const e = dots[j], dx = d.x - e.x, dy = d.y - e.y, dist = Math.hypot(dx, dy);
+            if (dist < LINK) {
+              ctx.beginPath();
+              ctx.moveTo(d.x, d.y); ctx.lineTo(e.x, e.y);
+              ctx.strokeStyle = 'rgba(59,213,139,' + (0.16 * (1 - dist / LINK)) + ')';
+              ctx.lineWidth = 1; ctx.stroke();
+            }
+          }
+        }
+        raf = requestAnimationFrame(step);
+      }
+      function start() { resize(); init(); cancelAnimationFrame(raf); step(); }
+      window.addEventListener('resize', start);
+      window.addEventListener('pointermove', (e) => {
+        const rect = canvas.getBoundingClientRect();
+        mouse.x = e.clientX - rect.left; mouse.y = e.clientY - rect.top;
+      });
+      window.addEventListener('pointerleave', () => { mouse.x = -9999; mouse.y = -9999; });
+      start();
+    })();
+  </script>
+</body>
+</html>
